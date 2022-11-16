@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "EditorConfig.EditorConfig",
+    "Gruntfuggly.todo-tree",
+    "bradlc.vscode-tailwindcss",
+    "csstools.postcss",
+    "arcanis.vscode-zipfs"
+  ]
+}
