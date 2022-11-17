@@ -19,10 +19,6 @@ import {
 } from '@heroicons/react/24/solid';
 import React, { FC, ReactNode } from 'react';
 
-type DashboardLayoutProps = {
-  children: ReactNode;
-};
-
 type DrawerItem = {
   title: string;
   to: string;
@@ -132,6 +128,10 @@ const drawerItems: readonly DrawerCategory[] = Object.freeze([
   },
 ]);
 
+export type DashboardLayoutProps = {
+  children: ReactNode;
+};
+
 const DashboardLayout: FC<DashboardLayoutProps> = ({
   children,
 }: DashboardLayoutProps) => {
@@ -163,7 +163,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
           {drawerItems.map((item) => {
             return (
               <React.Fragment key={item.title}>
-                <h2 className="uppercase text-sm font-semibold text-secondary ml-2 mb-2">
+                <h2 className="uppercase text-sm font-semibold text-primary ml-2 mb-2">
                   {item.title}
                 </h2>
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
 
-type DrawerItemProps = {
+export type DrawerItemProps = {
   title: string;
   to: string;
   icon: React.ElementType;
