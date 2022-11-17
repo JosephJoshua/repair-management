@@ -1,4 +1,5 @@
 import { DrawerItem } from '@/components/drawer-item';
+import ThemeSwitcher from '@/components/theme-switcher/ThemeSwitcher';
 import {
   ArrowUpTrayIcon,
   BuildingStorefrontIcon,
@@ -7,14 +8,12 @@ import {
   DevicePhoneMobileIcon,
   FireIcon,
   FunnelIcon,
-  MoonIcon,
   ReceiptPercentIcon,
   ReceiptRefundIcon,
   ShieldCheckIcon,
   ShieldExclamationIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
-  SunIcon,
   UserCircleIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/react/24/solid';
@@ -164,7 +163,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
           {drawerItems.map((item) => {
             return (
               <React.Fragment key={item.title}>
-                <h2 className="uppercase text-sm font-semibold text-neutral-content ml-2 mb-2">
+                <h2 className="uppercase text-sm font-semibold text-secondary ml-2 mb-2">
                   {item.title}
                 </h2>
 
@@ -173,14 +172,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
                     if ('isThemeSwitcher' in i) {
                       return (
                         <li key="theme-switcher">
-                          <button>
-                            <div className="swap swap-rotate">
-                              <SunIcon className="w-[20px] h-[20px] swap-on" />
-                              <MoonIcon className="w-[20px] h-[20px] swap-off" />
-                            </div>
-
-                            <span>Mode Gelap</span>
-                          </button>
+                          <ThemeSwitcher />
                         </li>
                       );
                     }
