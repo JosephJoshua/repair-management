@@ -512,6 +512,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-table@npm:^8.5.30":
+  version: 8.5.30
+  resolution: "@tanstack/react-table@npm:8.5.30"
+  dependencies:
+    "@tanstack/table-core": 8.5.30
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 0e61cd98bf68a8c5004dc80bf9ff097205ce5e48e48f72600cce0788db6987c4e770e0a97795a884c17f36647f8faf6cea5817399b1e74158c3c4ecf8c80c79a
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.5.30":
+  version: 8.5.30
+  resolution: "@tanstack/table-core@npm:8.5.30"
+  checksum: 05d5612ec417a665cb67c35eb94cada149884fc3377ec6b3850eff3081517a913a57b5725f9c609b9eada6de8b980d63bbb30a8d62111730d62aea80e184b997
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -4988,6 +5007,7 @@ __metadata:
     "@commitlint/types": ^17.0.0
     "@heroicons/react": ^2.0.13
     "@tailwindcss/line-clamp": ^0.4.2
+    "@tanstack/react-table": ^8.5.30
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.9

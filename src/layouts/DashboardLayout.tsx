@@ -139,7 +139,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
     <div className="drawer drawer-mobile">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-content p-4">{children}</div>
+      <div className="drawer-content px-6 pt-8">{children}</div>
       <div className="drawer-side">
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
 

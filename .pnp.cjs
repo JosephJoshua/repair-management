@@ -33,6 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@commitlint/types", "npm:17.0.0"],\
             ["@heroicons/react", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:2.0.13"],\
             ["@tailwindcss/line-clamp", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:0.4.2"],\
+            ["@tanstack/react-table", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:8.5.30"],\
             ["@types/node", "npm:18.11.9"],\
             ["@types/react", "npm:18.0.25"],\
             ["@types/react-dom", "npm:18.0.9"],\
@@ -663,6 +664,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/tailwindcss",\
             "tailwindcss"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/react-table", [\
+        ["npm:8.5.30", {\
+          "packageLocation": "./.yarn/cache/@tanstack-react-table-npm-8.5.30-43d9772f54-0e61cd98bf.zip/node_modules/@tanstack/react-table/",\
+          "packageDependencies": [\
+            ["@tanstack/react-table", "npm:8.5.30"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:8.5.30", {\
+          "packageLocation": "./.yarn/__virtual__/@tanstack-react-table-virtual-37feaf70ab/0/cache/@tanstack-react-table-npm-8.5.30-43d9772f54-0e61cd98bf.zip/node_modules/@tanstack/react-table/",\
+          "packageDependencies": [\
+            ["@tanstack/react-table", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:8.5.30"],\
+            ["@tanstack/table-core", "npm:8.5.30"],\
+            ["@types/react", "npm:18.0.25"],\
+            ["@types/react-dom", "npm:18.0.9"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/table-core", [\
+        ["npm:8.5.30", {\
+          "packageLocation": "./.yarn/cache/@tanstack-table-core-npm-8.5.30-367e2112e9-05d5612ec4.zip/node_modules/@tanstack/table-core/",\
+          "packageDependencies": [\
+            ["@tanstack/table-core", "npm:8.5.30"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6345,6 +6382,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@commitlint/types", "npm:17.0.0"],\
             ["@heroicons/react", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:2.0.13"],\
             ["@tailwindcss/line-clamp", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:0.4.2"],\
+            ["@tanstack/react-table", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:8.5.30"],\
             ["@types/node", "npm:18.11.9"],\
             ["@types/react", "npm:18.0.25"],\
             ["@types/react-dom", "npm:18.0.9"],\
