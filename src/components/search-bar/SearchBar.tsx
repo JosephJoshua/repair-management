@@ -1,5 +1,6 @@
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback, useRef } from 'react';
 import { OS } from 'src/utils/getOS';
 
@@ -25,19 +26,24 @@ const SearchBar: FC<SearchBarProps> = ({ className, os }: SearchBarProps) => {
   }, []);
 
   return (
-    <div className={`form-control relative ${className}`}>
-      <MagnifyingGlassIcon className="w-5 h-5 absolute left-2 top-[50%] translate-y-[-50%]" />
+    <div className={`form-control relative ${className || ''}`}>
+      <FontAwesomeIcon
+        icon={faSearch}
+        className="absolute left-2 top-[50%] h-5 w-5 translate-y-[-50%]"
+      />
 
       <input
         ref={inputRef}
         type="search"
-        className="input input-sm pl-9 text-base-content placeholder:text-base-content"
+        className={`rounded-lg border-none bg-slate-50 pl-10 text-primary focus:ring-0 focus-visible:ring-0 ${
+          os === OS.macos || os === OS.windows || os === OS.linux ? 'pr-16' : ''
+        }`}
         spellCheck={false}
         autoComplete="false"
         placeholder="Cari..."
       ></input>
 
-      <div className="flex absolute right-2 text-xs top-[50%] translate-y-[-50%] gap-1">
+      <div className="absolute right-2 top-[50%] flex translate-y-[-50%] gap-1 text-xs">
         {os === OS.macos ? (
           <>
             <kbd className="kbd">⌘</kbd>

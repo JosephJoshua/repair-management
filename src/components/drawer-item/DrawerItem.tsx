@@ -1,10 +1,12 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React, { FC } from 'react';
 
 export type DrawerItemProps = {
   title: string;
   to: string;
-  icon: React.ElementType;
+  icon: React.ElementType | IconDefinition;
 };
 
 const DrawerItem: FC<DrawerItemProps> = ({
@@ -12,10 +14,19 @@ const DrawerItem: FC<DrawerItemProps> = ({
   to,
   title,
 }: DrawerItemProps) => {
-  const iconElement = React.createElement(icon);
+  const iconElement =
+    typeof icon === 'object' && 'iconName' in icon ? (
+      <FontAwesomeIcon icon={icon} />
+    ) : (
+      React.createElement(icon)
+    );
+
   return (
-    <Link href={to} className="flex items-center">
-      <div className="w-[20px] h-[20px]">{iconElement}</div>{' '}
+    <Link
+      href={to}
+      className="flex items-center gap-x-2.5 rounded-xl p-4 transition-all duration-200 hover:bg-primary/10"
+    >
+      <div className="h-5 w-5 text-secondary">{iconElement}</div>
       <span>{title}</span>
     </Link>
   );

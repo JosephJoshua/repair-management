@@ -1,104 +1,99 @@
+import { clsx } from 'clsx';
+import { FC, useRef } from 'react';
+import { AriaTableProps, useTable } from 'react-aria';
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+  Cell as ReactStatelyCell,
+  Column as ReactStatelyColumn,
+  Row as ReactStatelyRow,
+  TableBody as ReactStatelyBody,
+  TableHeader as ReactStatelyHeader,
+  TableStateProps,
+  useTableState,
+} from 'react-stately';
+import { TableContext } from './Context';
+import TableCell from './TableCell';
+import TableColumnHeader from './TableColumnHeader';
+import TableHeaderRow from './TableHeaderRow';
+import TableRow from './TableRow';
+import TableRowGroup from './TableRowGroup';
+import TableSelectAllCell from './TableSelectAllCell';
+import TableSelectCell from './TableSelectCell';
 
-export type DataTableProps<T> = {
-  columns: ColumnDef<T>[];
-  data: T[];
-  className?: string;
-  enableSelection?: boolean;
-  enableMultiSelect?: boolean;
+export type DataTableProps = AriaTableProps<object> &
+  Omit<TableStateProps<object>, 'showSelectionCheckboxes'> & {
+    className?: string;
+  };
+
+type DataTableType = FC<DataTableProps> & {
+  Body: typeof ReactStatelyBody;
+  Cell: typeof ReactStatelyCell;
+  Column: typeof ReactStatelyColumn;
+  Header: typeof ReactStatelyHeader;
+  Row: typeof ReactStatelyRow;
 };
 
-const DataTable = <T,>({
-  className,
-  data,
-  columns,
-  enableSelection,
-  enableMultiSelect,
-}: DataTableProps<T>) => {
-  const table = useReactTable<T>({
-    data,
-    columns,
-    state: {},
-    getCoreRowModel: getCoreRowModel(),
+const DataTable: DataTableType = ({ className, ...props }: DataTableProps) => {
+  // Make the selection behavior default to 'replace'
+  // when the selection mode is 'single'.
+  const selectionBehavior =
+    props.selectionBehavior ??
+    (props.selectionMode === 'single' ? 'replace' : 'toggle');
+
+  const ref = useRef<HTMLTableElement>(null);
+
+  const state = useTableState({
+    ...props,
+    selectionBehavior,
+    showSelectionCheckboxes:
+      props.selectionMode === 'multiple' && selectionBehavior !== 'replace',
   });
 
+  const { gridProps } = useTable({ ...props }, state, ref);
+  const { collection } = state;
+
   return (
-    <table className={`table ${className}`}>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {enableSelection && (
-              <th key="selection-checkbox" className="h-full w-5">
-                {/* Only render the checkbox if multi-select is enabled. */}
-                {enableMultiSelect && (
-                  <div className="flex justify-center">
-                    <input
-                      type="checkbox"
-                      className="checkbox w-5 h-5"
-                      checked={table.getIsAllPageRowsSelected()}
-                      onChange={table.getToggleAllPageRowsSelectedHandler()}
-                    />
-                  </div>
-                )}
-              </th>
-            )}
-
-            {headerGroup.headers.map((header) => {
-              return (
-                <th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  style={{ width: header.getSize() }}
-                  className="py-3 normal-case text-base font-semibold"
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              );
-            })}
-          </tr>
-        ))}
-      </thead>
-
-      <tbody>
-        {table.getRowModel().rows.map((row) => {
-          return (
-            <tr key={row.id} className="hover">
-              {enableSelection && (
-                <td key="selection-checkbox" className="h-full">
-                  <div className="flex justify-center">
-                    <input
-                      type="checkbox"
-                      className="checkbox w-5 h-5"
-                      checked={row.getIsSelected()}
-                      onChange={row.getToggleSelectedHandler()}
-                    />
-                  </div>
-                </td>
+    <TableContext.Provider value={{ state }}>
+      <table
+        {...gridProps}
+        ref={ref}
+        className={clsx(className, 'border-collapse')}
+      >
+        <TableRowGroup type="thead">
+          {collection.headerRows.map((headerRow) => (
+            <TableHeaderRow key={headerRow.key} row={headerRow}>
+              {[...headerRow.childNodes].map((col) =>
+                col.props?.isSelectionCell ? (
+                  <TableSelectAllCell key={col.key} cell={col} />
+                ) : (
+                  <TableColumnHeader key={col.key} cell={col} />
+                )
               )}
+            </TableHeaderRow>
+          ))}
+        </TableRowGroup>
 
-              {row.getVisibleCells().map((cell) => {
-                return (
-                  <td key={cell.id} style={{ width: cell.column.getSize() }}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+        <TableRowGroup type="tbody">
+          {[...collection.body.childNodes].map((row) => (
+            <TableRow key={row.key} row={row}>
+              {[...row.childNodes].map((cell) =>
+                cell.props?.isSelectionCell ? (
+                  <TableSelectCell key={cell.key} cell={cell} />
+                ) : (
+                  <TableCell key={cell.key} cell={cell} />
+                )
+              )}
+            </TableRow>
+          ))}
+        </TableRowGroup>
+      </table>
+    </TableContext.Provider>
   );
 };
+
+DataTable.Body = ReactStatelyBody;
+DataTable.Cell = ReactStatelyCell;
+DataTable.Column = ReactStatelyColumn;
+DataTable.Header = ReactStatelyHeader;
+DataTable.Row = ReactStatelyRow;
 
 export default DataTable;

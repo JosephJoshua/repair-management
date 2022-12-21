@@ -1,37 +1,28 @@
-import { DrawerItem } from '@/components/drawer-item';
-import ThemeSwitcher from '@/components/theme-switcher/ThemeSwitcher';
+import { DrawerItem, DrawerItemProps } from '@/components/drawer-item';
 import {
-  ArrowUpTrayIcon,
-  BuildingStorefrontIcon,
-  ClockIcon,
-  Cog6ToothIcon,
-  DevicePhoneMobileIcon,
-  FireIcon,
-  FunnelIcon,
-  ReceiptPercentIcon,
-  ReceiptRefundIcon,
-  ShieldCheckIcon,
-  ShieldExclamationIcon,
-  ShoppingBagIcon,
-  ShoppingCartIcon,
-  UserCircleIcon,
-  WrenchScrewdriverIcon,
-} from '@heroicons/react/24/solid';
+  faCartArrowDown,
+  faCartPlus,
+  faClock,
+  faComputer,
+  faFileInvoiceDollar,
+  faFilter,
+  faFire,
+  faGear,
+  faRotateLeft,
+  faScrewdriverWrench,
+  faShieldVirus,
+  faShop,
+  faStore,
+  faTriangleExclamation,
+  faUser,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FC, ReactNode } from 'react';
-
-type DrawerItem = {
-  title: string;
-  to: string;
-  icon: React.ElementType;
-};
-
-type DrawerThemeSwitcherItem = {
-  isThemeSwitcher: true;
-};
 
 type DrawerCategory = {
   title: string;
-  children: (DrawerItem | DrawerThemeSwitcherItem)[];
+  children: DrawerItemProps[];
 };
 
 const drawerItems: readonly DrawerCategory[] = Object.freeze([
@@ -41,89 +32,87 @@ const drawerItems: readonly DrawerCategory[] = Object.freeze([
       {
         title: 'Daftar RO (Repair Order)',
         to: '/repair-orders',
-        icon: ReceiptPercentIcon,
+        icon: faFileInvoiceDollar,
       },
       {
         title: 'Daftar RO dengan Garansi',
         to: '/under-warranty-repair-orders',
-        icon: ReceiptRefundIcon,
+        icon: faRotateLeft,
       },
       {
         title: 'Cek Garansi RO',
         to: '/check-warranty',
-        icon: ShieldCheckIcon,
+        icon: faShieldVirus,
       },
     ],
   },
   {
     title: 'Sparepart',
     children: [
-      { title: 'Daftar Sparepart', to: '/spareparts', icon: ShoppingBagIcon },
+      { title: 'Daftar Sparepart', to: '/spareparts', icon: faStore },
       {
         title: 'Pembelian Sparepart',
         to: '/sparepart-purchases',
-        icon: ShoppingCartIcon,
+        icon: faCartPlus,
       },
       {
         title: 'Retur Pembelian',
         to: '/sparepart-purchase-returns',
-        icon: ReceiptRefundIcon,
+        icon: faRotateLeft,
       },
       {
         title: 'Pemakaian Sparepart',
         to: '/sparepart-usage',
-        icon: ArrowUpTrayIcon,
+        icon: faCartArrowDown,
       },
       {
         title: 'Retur Pemakaian',
         to: '/sparepart-usage-returns',
-        icon: ReceiptRefundIcon,
+        icon: faRotateLeft,
       },
       {
         title: 'Stock Opname',
         to: '/stock-opname',
-        icon: FunnelIcon,
+        icon: faFilter,
       },
     ],
   },
   {
     title: 'Setup Toko',
     children: [
-      { title: 'Daftar Pengguna', to: '/users', icon: UserCircleIcon },
+      { title: 'Daftar Pengguna', to: '/users', icon: faUser },
       {
         title: 'Daftar Teknisi',
         to: '/technicians',
-        icon: WrenchScrewdriverIcon,
+        icon: faScrewdriverWrench,
       },
       {
         title: 'Daftar Supplier',
         to: '/suppliers',
-        icon: BuildingStorefrontIcon,
+        icon: faShop,
       },
-      { title: 'Daftar Sparepart', to: '/spareparts', icon: ShoppingBagIcon },
       {
         title: 'Daftar Perangkat',
         to: '/devices',
-        icon: DevicePhoneMobileIcon,
+        icon: faComputer,
       },
-      { title: 'Daftar Kerusakan', to: '/damages', icon: FireIcon },
+      { title: 'Daftar Kerusakan', to: '/damages', icon: faFire },
       {
         title: 'Daftar Kondisi',
         to: '/conditions',
-        icon: ShieldExclamationIcon,
+        icon: faTriangleExclamation,
       },
       {
         title: 'Daftar Masa Garansi',
         to: '/warranty-periods',
-        icon: ClockIcon,
+        icon: faClock,
       },
     ],
   },
   {
     title: 'Pengaturan',
     children: [
-      { title: 'Pengaturan Toko', to: '/store-settings', icon: Cog6ToothIcon },
-      { isThemeSwitcher: true },
+      { title: 'Pengaturan Toko', to: '/store-settings', icon: faGear },
     ],
   },
 ]);
@@ -136,47 +125,36 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
   children,
 }: DashboardLayoutProps) => {
   return (
-    <div className="drawer drawer-mobile">
-      <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
+    <>
+      {/* Background */}
+      <div className="absolute top-0 -z-10 h-[24rem] w-full bg-primary"></div>
 
-      <div className="drawer-content px-6 pt-6">{children}</div>
-      <div className="drawer-side">
-        <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-
-        <div className="flex flex-col menu p-4 w-85 bg-base-100 text-base-content">
-          <h1 className="text-xl font-semibold mb-4 ml-2">
-            <span className="text-primary">Re</span>
-            <span>Mana</span>
-          </h1>
-
-          <div className="avatar flex flex-col items-center">
-            <div className="w-24 rounded-full">
-              <UserCircleIcon />
-            </div>
-
-            <span className="mt-2">Admin</span>
-            <span className="mt-0.5">Point Service Center</span>
+      <aside className="fixed inset-y-0 left-0 z-50 my-4 ml-5 grid w-full max-w-xs grid-flow-row grid-cols-1 grid-rows-[auto,minmax(0,1fr),auto] flex-wrap items-center justify-between rounded-2xl border-0 bg-white pt-4 pb-2 antialiased shadow-xl transition-transform duration-200">
+        <div>
+          {/* Logo */}
+          <div className="flex h-8 items-end justify-center px-6">
+            <h1 className="text-xl font-semibold">
+              <span className="text-primary">Re</span>
+              <span className="text-secondary">Mana</span>
+            </h1>
           </div>
 
-          <div className="divider my-3"></div>
+          <div className="mt-3 mb-4 h-px bg-gradient-to-r from-slate-100 via-primary/10 to-slate-100"></div>
+        </div>
 
-          {drawerItems.map((item) => {
+        {/* Drawer Items */}
+        <div className="h-full w-full overflow-auto px-3">
+          {drawerItems.map((item, idx) => {
             return (
               <React.Fragment key={item.title}>
-                <h2 className="uppercase text-sm font-semibold text-primary ml-2 mb-2">
+                <h2 className="mb-1.5 ml-4 text-sm font-semibold uppercase text-primary">
                   {item.title}
                 </h2>
 
-                <ul className="mb-4">
+                <ul
+                  className={idx === drawerItems.length - 1 ? 'mb-1' : 'mb-6'}
+                >
                   {item.children.map((i) => {
-                    if ('isThemeSwitcher' in i) {
-                      return (
-                        <li key="theme-switcher">
-                          <ThemeSwitcher />
-                        </li>
-                      );
-                    }
-
                     return (
                       <li key={i.to}>
                         <DrawerItem {...i} />
@@ -188,8 +166,21 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
             );
           })}
         </div>
-      </div>
-    </div>
+
+        <div className="mt-3 flex items-center gap-4 px-4">
+          <div className="rounded-full">
+            <FontAwesomeIcon className="h-8 w-8" icon={faUserCircle} />
+          </div>
+
+          <div className="flex flex-col text-primary">
+            <span className="font-semibold">Admin</span>
+            <span className="font-medium">Point Service Center</span>
+          </div>
+        </div>
+      </aside>
+
+      <div className="ml-[21.5rem] px-4 pt-6 pb-8">{children}</div>
+    </>
   );
 };
 

@@ -10,12 +10,17 @@
     "postinstall": "husky install"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.13",
-    "@tanstack/react-table": "^8.5.30",
-    "daisyui": "^2.41.0",
-    "next": "13.0.3",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@next/font": "^13.0.7",
+    "@tabler/icons": "^1.117.0",
+    "clsx": "^1.2.1",
+    "next": "13.0.7",
     "react": "18.2.0",
+    "react-aria": "^3.21.0",
     "react-dom": "18.2.0",
+    "react-stately": "^3.20.0",
     "sharp": "^0.31.2",
     "typescript": "4.9.3"
   },
@@ -23,6 +28,10 @@
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "@commitlint/types": "^17.0.0",
+    "@react-types/grid": "^3.1.5",
+    "@react-types/shared": "^3.16.0",
+    "@react-types/table": "^3.4.0",
+    "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
@@ -38,6 +47,7 @@
     "lint-staged": "^13.0.3",
     "postcss": "^8.4.19",
     "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4"
   },
   "engines": {
