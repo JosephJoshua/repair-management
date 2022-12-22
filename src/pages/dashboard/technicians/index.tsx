@@ -66,7 +66,7 @@ const TechniciansPage: NextPage<TechnicianPageProps> = ({
 
       <DashboardLayout>
         <div className="flex justify-end">
-          <SearchBar className="mb-4" os={os} />
+          <SearchBar os={os} />
         </div>
 
         <div className="card mt-4 p-6">
