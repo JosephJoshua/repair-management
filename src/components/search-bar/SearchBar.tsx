@@ -1,91 +1,61 @@
-import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import clsx from 'clsx';
-import { FC, useCallback, useRef } from 'react';
-import { AriaSearchFieldProps, useSearchField } from 'react-aria';
-import { useSearchFieldState } from 'react-stately';
-import { OS } from 'src/utils/getOS';
+import { Group, Kbd, TextInput } from '@mantine/core';
+import { useElementSize, useHotkeys, useOs } from '@mantine/hooks';
+import { IconSearch } from '@tabler/icons';
+import { FC, useEffect, useRef, useState } from 'react';
 
-export type SearchBarProps = AriaSearchFieldProps & {
-  className?: string;
-  os?: OS;
-};
+const SearchBar: FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const os = useOs();
+  const { ref: shortcutRef, width: shortcutWidth } = useElementSize();
 
-const SearchBar: FC<SearchBarProps> = ({
-  className,
-  os,
-  ...props
-}: SearchBarProps) => {
-  const ref = useRef<HTMLInputElement>(null);
-  const state = useSearchFieldState(props);
-  const { inputProps } = useSearchField(
-    {
-      placeholder: 'Cari...',
-      autoComplete: 'off',
-      ...props,
-    },
-    state,
-    ref
-  );
-
-  const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    if (ref.current == null) return;
-
-    if (event.key === 'k' && (event.ctrlKey || event.metaKey)) {
-      ref.current.focus();
-      event.stopPropagation();
-    }
-  }, []);
-
-  useIsomorphicLayoutEffect(() => {
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keyup', handleKeyPress);
-  }, []);
+  // Avoid hydration mismatch errors due to the
+  // OS being 'undetermined' during SSR by rendering without the shortcut
+  // indicator on the server & client on the first render and then adding
+  // it when rendering gets handed over to the client.
+  const [showShortcutIndicator, setShowShortcutIndicator] =
+    useState<boolean>(false);
+  useEffect(() => setShowShortcutIndicator(true), []);
 
   const shortcutIndicator = (() => {
-    if (os === OS.macos) {
+    if (os === 'macos')
       return (
         <>
-          <kbd className="kbd">⌘</kbd>
-          <kbd className="kbd">K</kbd>
+          <Kbd>⌘</Kbd>
+          <Kbd>K</Kbd>
+        </>
+      );
+
+    if (os === 'linux' || os === 'windows') {
+      return (
+        <>
+          <Kbd>Ctrl</Kbd>
+          <Kbd>K</Kbd>
         </>
       );
     }
 
-    if (os === OS.windows || os === OS.linux) {
-      return (
-        <>
-          <kbd className="kbd">Ctrl</kbd>
-          <kbd className="kbd">K</kbd>
-        </>
-      );
-    }
-
-    return <></>;
+    return null;
   })();
 
+  useHotkeys([['mod+K', () => inputRef.current?.focus()]]);
+
   return (
-    <div className={clsx('form-control relative', className)}>
-      <FontAwesomeIcon
-        icon={faSearch}
-        className="absolute left-2 top-[50%] h-5 w-5 translate-y-[-50%]"
-      />
-
-      <input
-        ref={ref}
-        className={clsx(
-          'rounded-lg border-none bg-slate-50 pl-10 text-primary focus:ring-0 focus-visible:ring-0',
-          (os === OS.windows || os === OS.macos || os === OS.linux) && 'pr-16'
-        )}
-        spellCheck={false}
-        {...inputProps}
-      />
-
-      <div className="absolute right-2 top-[50%] flex translate-y-[-50%] gap-1 text-xs">
-        {shortcutIndicator}
-      </div>
-    </div>
+    <TextInput
+      aria-label="Cari"
+      placeholder="Cari..."
+      icon={<IconSearch size={20} />}
+      rightSection={
+        <Group ref={shortcutRef} spacing={2}>
+          {showShortcutIndicator && shortcutIndicator}
+        </Group>
+      }
+      rightSectionProps={{ style: { justifyContent: 'end', paddingRight: 6 } }}
+      rightSectionWidth={shortcutWidth + 8}
+      type="search"
+      spellCheck={false}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
+      ref={inputRef}
+    />
   );
 };
 

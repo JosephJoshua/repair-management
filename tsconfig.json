@@ -7,7 +7,7 @@
       "@/hooks/*": ["src/hooks/*"],
       "@/layouts/*": ["src/layouts/*"],
       "@/pages/*": ["src/pages/*"],
-      "@/styles/*": ["src/styles/*"],
+      "@/emotion/*": ["src/emotion/*"],
       "@/public/*": ["public/*"]
     },
     "target": "esnext",

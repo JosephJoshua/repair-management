@@ -1,15 +1,22 @@
-import { Head, Html, Main, NextScript } from 'next/document';
+import { createGetInitialProps } from '@mantine/next';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
-const Document = () => {
-  return (
-    <Html lang="id">
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
-};
+const getInitialProps = createGetInitialProps();
 
-export default Document;
+class _Document extends Document {
+  static getInitialProps = getInitialProps;
+
+  render(): JSX.Element {
+    return (
+      <Html lang="id">
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default _Document;
