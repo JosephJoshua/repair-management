@@ -1,13 +1,13 @@
-import { DrawerCategory } from '@/components/app-drawer';
+import { DrawerCategory } from '@/components/shared/app-drawer';
 import {
   IconAdjustments,
   IconBuildingStore,
   IconBuildingWarehouse,
+  IconCodeMinus,
   IconCodePlus,
   IconDeviceDesktop,
   IconExclamationCircle,
   IconFileInvoice,
-  IconFileMinus,
   IconFlame,
   IconHourglass,
   IconSettings,
@@ -83,7 +83,7 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
         key: 'sparepart-usage-returns',
         title: 'Retur Pemakaian',
         to: '/sparepart-usage-returns',
-        icon: IconFileMinus,
+        icon: IconCodeMinus,
         color: 'red',
       },
       {
@@ -109,7 +109,7 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
       {
         key: 'technicians',
         title: 'Daftar Teknisi',
-        to: '/technicians',
+        to: '/dashboard/technicians',
         icon: IconTools,
         color: 'grape',
       },

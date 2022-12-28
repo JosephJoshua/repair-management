@@ -1,34 +1,52 @@
-import { AppDrawer } from '@/components/app-drawer';
-import { AppHeader } from '@/components/app-header';
-import { ColorSchemeToggle } from '@/components/color-scheme-toggle';
-import { SearchBar } from '@/components/search-bar';
+import { AppDrawer } from '@/components/shared/app-drawer';
+import { AppHeader } from '@/components/shared/app-header';
+import { ColorSchemeToggle } from '@/components/shared/color-scheme-toggle';
+import { SearchBar } from '@/components/shared/search-bar';
+import { ShortcutContext } from '@/contexts/ShortcutContext';
 import { AppShell } from '@mantine/core';
-import { FC, ReactNode } from 'react';
+import { HotkeyItem, useHotkeys } from '@mantine/hooks';
+import { FC, ReactNode, useRef } from 'react';
 import { drawerCategories } from './data';
 
 export type DashboardLayoutProps = {
   children: ReactNode;
+  onAdd?: () => void;
+  onSearch?: (query: string) => void;
 };
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({
   children,
+  onAdd,
 }: DashboardLayoutProps) => {
+  const searchBarRef = useRef<HTMLInputElement>(null);
+
+  const shortcuts = [
+    ['s', () => searchBarRef.current?.focus()],
+    onAdd && ['a', () => onAdd()],
+  ].filter(Boolean) as HotkeyItem[];
+
+  useHotkeys(shortcuts);
+
   return (
-    <AppShell
-      navbar={<AppDrawer categories={drawerCategories} />}
-      header={
-        <AppHeader
-          side={
-            <>
-              <SearchBar />
-              <ColorSchemeToggle size={36} p={8} />
-            </>
-          }
-        />
-      }
+    <ShortcutContext.Provider
+      value={{ shortcuts: shortcuts.map((val) => val[0]) }}
     >
-      {children}
-    </AppShell>
+      <AppShell
+        navbar={<AppDrawer categories={drawerCategories} />}
+        header={
+          <AppHeader
+            side={
+              <>
+                <SearchBar ref={searchBarRef} />
+                <ColorSchemeToggle size={36} p={8} />
+              </>
+            }
+          />
+        }
+      >
+        {children}
+      </AppShell>
+    </ShortcutContext.Provider>
   );
 };
 

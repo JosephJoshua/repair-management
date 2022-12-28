@@ -40,7 +40,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fortawesome/free-solid-svg-icons", "npm:6.2.1"],\
             ["@fortawesome/react-fontawesome", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:0.2.0"],\
             ["@mantine/core", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/form", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@mantine/hooks", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/modals", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@mantine/next", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@mantine/nprogress", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@next/font", "npm:13.0.7"],\
@@ -56,11 +58,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-prettier", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:8.5.0"],\
             ["husky", "npm:8.0.2"],\
             ["lint-staged", "npm:13.0.3"],\
+            ["mantine-datatable", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:1.7.32"],\
             ["next", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:13.0.7"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:18.2.0"],\
             ["sharp", "npm:0.31.2"],\
+            ["sort-by-typescript", "npm:1.2.3"],\
             ["typescript", "patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=d73830"]\
           ],\
           "linkType": "SOFT"\
@@ -857,6 +861,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@mantine/form", [\
+        ["npm:5.9.5", {\
+          "packageLocation": "./.yarn/cache/@mantine-form-npm-5.9.5-0264ee84f3-1962f8c694.zip/node_modules/@mantine/form/",\
+          "packageDependencies": [\
+            ["@mantine/form", "npm:5.9.5"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5", {\
+          "packageLocation": "./.yarn/__virtual__/@mantine-form-virtual-c496237333/0/cache/@mantine-form-npm-5.9.5-0264ee84f3-1962f8c694.zip/node_modules/@mantine/form/",\
+          "packageDependencies": [\
+            ["@mantine/form", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@types/react", "npm:18.0.25"],\
+            ["fast-deep-equal", "npm:3.1.3"],\
+            ["klona", "npm:2.0.5"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@mantine/hooks", [\
         ["npm:5.9.5", {\
           "packageLocation": "./.yarn/cache/@mantine-hooks-npm-5.9.5-4c1c2195b2-250775bf44.zip/node_modules/@mantine/hooks/",\
@@ -874,6 +902,41 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@mantine/modals", [\
+        ["npm:5.9.5", {\
+          "packageLocation": "./.yarn/cache/@mantine-modals-npm-5.9.5-4e850a8939-6a10de6fe8.zip/node_modules/@mantine/modals/",\
+          "packageDependencies": [\
+            ["@mantine/modals", "npm:5.9.5"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5", {\
+          "packageLocation": "./.yarn/__virtual__/@mantine-modals-virtual-aa78a161b8/0/cache/@mantine-modals-npm-5.9.5-4e850a8939-6a10de6fe8.zip/node_modules/@mantine/modals/",\
+          "packageDependencies": [\
+            ["@mantine/modals", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/core", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/hooks", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/utils", "virtual:2456a6639b620dc1fc06fa32fef32884ff15722fd539204cc8bb543f6cbf5d770cda183870911355ecac2a9c65fb26166e4aa1ebf73950a13e3cd61926c62484#npm:5.9.5"],\
+            ["@types/mantine__core", null],\
+            ["@types/mantine__hooks", null],\
+            ["@types/react", "npm:18.0.25"],\
+            ["@types/react-dom", "npm:18.0.9"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@mantine/core",\
+            "@mantine/hooks",\
+            "@types/mantine__core",\
+            "@types/mantine__hooks",\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\
@@ -4821,6 +4884,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["klona", [\
+        ["npm:2.0.5", {\
+          "packageLocation": "./.yarn/cache/klona-npm-2.0.5-5d403f2d77-8c976126ea.zip/node_modules/klona/",\
+          "packageDependencies": [\
+            ["klona", "npm:2.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["language-subtag-registry", [\
         ["npm:0.3.22", {\
           "packageLocation": "./.yarn/cache/language-subtag-registry-npm-0.3.22-e9f79fe04e-8ab70a7e0e.zip/node_modules/language-subtag-registry/",\
@@ -5027,6 +5099,36 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["promise-retry", "npm:2.0.1"],\
             ["socks-proxy-agent", "npm:7.0.0"],\
             ["ssri", "npm:9.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["mantine-datatable", [\
+        ["npm:1.7.32", {\
+          "packageLocation": "./.yarn/cache/mantine-datatable-npm-1.7.32-e19c37ef5e-23dd2b9f76.zip/node_modules/mantine-datatable/",\
+          "packageDependencies": [\
+            ["mantine-datatable", "npm:1.7.32"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:1.7.32", {\
+          "packageLocation": "./.yarn/__virtual__/mantine-datatable-virtual-fbd3b2400c/0/cache/mantine-datatable-npm-1.7.32-e19c37ef5e-23dd2b9f76.zip/node_modules/mantine-datatable/",\
+          "packageDependencies": [\
+            ["mantine-datatable", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:1.7.32"],\
+            ["@mantine/core", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/hooks", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@types/mantine__core", null],\
+            ["@types/mantine__hooks", null],\
+            ["@types/react", "npm:18.0.25"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@mantine/core",\
+            "@mantine/hooks",\
+            "@types/mantine__core",\
+            "@types/mantine__hooks",\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6165,7 +6267,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fortawesome/free-solid-svg-icons", "npm:6.2.1"],\
             ["@fortawesome/react-fontawesome", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:0.2.0"],\
             ["@mantine/core", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/form", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@mantine/hooks", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
+            ["@mantine/modals", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@mantine/next", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@mantine/nprogress", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:5.9.5"],\
             ["@next/font", "npm:13.0.7"],\
@@ -6181,11 +6285,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-prettier", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:8.5.0"],\
             ["husky", "npm:8.0.2"],\
             ["lint-staged", "npm:13.0.3"],\
+            ["mantine-datatable", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:1.7.32"],\
             ["next", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:13.0.7"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:cd929c8bc24fe2576db95020ef3c237f60204fc041c3e76c456dcbd8d34ff81216bbec99ce8db580c5cc0ab2c91ab02173a9fededf533d0afc1cad9688aee66f#npm:18.2.0"],\
             ["sharp", "npm:0.31.2"],\
+            ["sort-by-typescript", "npm:1.2.3"],\
             ["typescript", "patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=d73830"]\
           ],\
           "linkType": "SOFT"\
@@ -6570,6 +6676,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["agent-base", "npm:6.0.2"],\
             ["debug", "virtual:9e3a462140b35a19ddb3d48ebde58d66740d97f4c0386bc195c327fc2c44fa59f43cbcb382dd9f194b16d0dd6c0a138aadd4a9de84088f88e25946598f97cb88#npm:4.3.4"],\
             ["socks", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sort-by-typescript", [\
+        ["npm:1.2.3", {\
+          "packageLocation": "./.yarn/cache/sort-by-typescript-npm-1.2.3-6c5a209a1e-87f040c2c4.zip/node_modules/sort-by-typescript/",\
+          "packageDependencies": [\
+            ["sort-by-typescript", "npm:1.2.3"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -613,12 +613,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/form@npm:^5.9.5":
+  version: 5.9.5
+  resolution: "@mantine/form@npm:5.9.5"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    klona: ^2.0.5
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 1962f8c694974f374b08894fef148850bbe120add06b04b1adb17128b66335c1ae38c20cd4347e36ae5029df4b72c2fd7e717e5b709712cbfec9e7b625d27842
+  languageName: node
+  linkType: hard
+
 "@mantine/hooks@npm:^5.9.5":
   version: 5.9.5
   resolution: "@mantine/hooks@npm:5.9.5"
   peerDependencies:
     react: ">=16.8.0"
   checksum: 250775bf440afcc8000585fa98c54b1f6d125b1d3bc4e5f118c539f6a6bf674264acd1cb72221f5786a32c5207340990463a82a66365e810e2517858770d5302
+  languageName: node
+  linkType: hard
+
+"@mantine/modals@npm:^5.9.5":
+  version: 5.9.5
+  resolution: "@mantine/modals@npm:5.9.5"
+  dependencies:
+    "@mantine/utils": 5.9.5
+  peerDependencies:
+    "@mantine/core": 5.9.5
+    "@mantine/hooks": 5.9.5
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 6a10de6fe887f681845fa9f37fd58961687d42a29d06f9c5f53d239085b56b82986404aa2c3b1e16e62b9f997f213f6458948624158dacae312ca6a75701e636
   languageName: node
   linkType: hard
 
@@ -3683,6 +3709,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"klona@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "klona@npm:2.0.5"
+  checksum: 8c976126ea252b766e648a4866e1bccff9d3b08432474ad80c559f6c7265cf7caede2498d463754d8c88c4759895edd8210c85c0d3155e6aae4968362889466f
+  languageName: node
+  linkType: hard
+
 "language-subtag-registry@npm:~0.3.2":
   version: 0.3.22
   resolution: "language-subtag-registry@npm:0.3.22"
@@ -3866,6 +3899,17 @@ __metadata:
     socks-proxy-agent: ^7.0.0
     ssri: ^9.0.0
   checksum: 2332eb9a8ec96f1ffeeea56ccefabcb4193693597b132cd110734d50f2928842e22b84cfa1508e921b8385cdfd06dda9ad68645fed62b50fff629a580f5fb72c
+  languageName: node
+  linkType: hard
+
+"mantine-datatable@npm:^1.7.32":
+  version: 1.7.32
+  resolution: "mantine-datatable@npm:1.7.32"
+  peerDependencies:
+    "@mantine/core": ^5.9.5
+    "@mantine/hooks": ^5.9.5
+    react: ^18.2.0
+  checksum: 23dd2b9f769ee4e6810607c32e3d10a4602a4f03ed5bf14281ca71aee0163d97da67267c50b56093e01028678eb1bfba18f5ed0ea752d4586566f3f0f18e65e6
   languageName: node
   linkType: hard
 
@@ -4880,7 +4924,9 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": ^6.2.1
     "@fortawesome/react-fontawesome": ^0.2.0
     "@mantine/core": ^5.9.5
+    "@mantine/form": ^5.9.5
     "@mantine/hooks": ^5.9.5
+    "@mantine/modals": ^5.9.5
     "@mantine/next": ^5.9.5
     "@mantine/nprogress": ^5.9.5
     "@next/font": ^13.0.7
@@ -4896,11 +4942,13 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     husky: ^8.0.0
     lint-staged: ^13.0.3
+    mantine-datatable: ^1.7.32
     next: 13.0.7
     prettier: ^2.7.1
     react: 18.2.0
     react-dom: 18.2.0
     sharp: ^0.31.2
+    sort-by-typescript: ^1.2.3
     typescript: 4.9.3
   languageName: unknown
   linkType: soft
@@ -5284,6 +5332,13 @@ __metadata:
     ip: ^2.0.0
     smart-buffer: ^4.2.0
   checksum: 259d9e3e8e1c9809a7f5c32238c3d4d2a36b39b83851d0f573bfde5f21c4b1288417ce1af06af1452569cd1eb0841169afd4998f0e04ba04656f6b7f0e46d748
+  languageName: node
+  linkType: hard
+
+"sort-by-typescript@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "sort-by-typescript@npm:1.2.3"
+  checksum: 87f040c2c4f06e5da660b939fd4cd733ff62cacfecfc1a6158d3d8291d00b0bee140750c4f8e663ea415c9cb1abd6804c210f636332e661ccc47a02fdf31f212
   languageName: node
   linkType: hard
 

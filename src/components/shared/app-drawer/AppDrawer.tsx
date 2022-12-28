@@ -2,73 +2,26 @@ import {
   Accordion,
   Avatar,
   Box,
-  createStyles,
   Group,
-  MantineColor,
   Navbar,
   ScrollArea,
   Stack,
   Text,
   ThemeIcon,
-  useMantineTheme,
 } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import { TablerIcon } from '@tabler/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC, useMemo } from 'react';
-
-export type DrawerCategory = {
-  key: React.Key;
-  title: string;
-  children: DrawerItem[];
-};
-
-export type DrawerItem = {
-  key: React.Key;
-  title: string;
-  to: string;
-  icon: TablerIcon;
-  color?: MantineColor;
-};
+import useStyles from './AppDrawer.styles';
+import { DrawerCategory } from './AppDrawer.types';
 
 export type AppDrawerProps = {
   categories: readonly DrawerCategory[];
 };
 
-const useStyles = createStyles((theme) => ({
-  link: {
-    display: 'block',
-    width: '100%',
-    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
-    borderRadius: theme.spacing.md,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    textDecoration: 'none',
-
-    '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[6]
-          : theme.colors.gray[1],
-    },
-  },
-  activeLink: {
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors[theme.primaryColor][6]
-        : theme.colors[theme.primaryColor][4],
-    color: theme.white,
-
-    '&:hover': {
-      backgroundColor: theme.colors[theme.primaryColor][5],
-    },
-  },
-}));
-
 const AppDrawer: FC<AppDrawerProps> = ({ categories }) => {
-  const theme = useMantineTheme();
   const { classes, cx } = useStyles();
-
   const router = useRouter();
 
   // `useLocalStorage` doesn't allow passing in a function
@@ -100,15 +53,10 @@ const AppDrawer: FC<AppDrawerProps> = ({ categories }) => {
           variant="filled"
           value={expandedItems}
           onChange={setExpandedItems}
+          classNames={{ item: classes.categoryItem }}
           styles={{
             content: {
               padding: 0,
-            },
-            item: {
-              paddingRight: theme.spacing.xs,
-              '&[data-active]': {
-                background: 'transparent',
-              },
             },
           }}
         >
@@ -160,16 +108,7 @@ const AppDrawer: FC<AppDrawerProps> = ({ categories }) => {
       </Navbar.Section>
 
       <Navbar.Section>
-        <Group
-          sx={{
-            paddingTop: theme.spacing.sm,
-            borderTop: `1px solid ${
-              theme.colorScheme === 'dark'
-                ? theme.colors.dark[4]
-                : theme.colors.gray[2]
-            }`,
-          }}
-        >
+        <Group className={classes.userBar}>
           <Avatar radius="xl" />
           <Box sx={{ flexGrow: 1 }}>
             <Text size="sm" weight={600} lh={1.2}>

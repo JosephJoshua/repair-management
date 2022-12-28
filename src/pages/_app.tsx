@@ -1,10 +1,16 @@
 import {
   ColorScheme,
   ColorSchemeProvider,
+  KbdProps,
   MantineProvider,
+  MantineTheme,
   MantineThemeOverride,
+  TextInputProps,
+  TooltipProps,
 } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
+import { ModalsProvider } from '@mantine/modals';
+import { ModalSettings } from '@mantine/modals/lib/context';
 import { Poppins, Ubuntu_Mono } from '@next/font/google';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -20,6 +26,40 @@ const ubuntuMono = Ubuntu_Mono({
   subsets: ['latin'],
   display: 'auto',
 });
+
+const defaultKbdProps: Partial<KbdProps> = {
+  styles: {
+    root: {
+      minWidth: '1.5rem',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+    },
+  },
+};
+
+const defaultTextInputProps: Partial<TextInputProps> = {
+  styles: (theme) => ({
+    error: {
+      fontWeight: 500,
+      color: theme.colors.red[7],
+    },
+  }),
+};
+
+const defaultTooltipProps: Partial<TooltipProps> = {
+  styles: (theme) => ({ tooltip: { fontSize: theme.fontSizes.xs } }),
+};
+
+const defaultModalProps: ModalSettings = {
+  styles: (theme: MantineTheme) => ({
+    title: { fontWeight: 600 },
+    close: { color: theme.colorScheme === 'dark' ? theme.white : theme.black },
+  }),
+  overflow: 'outside',
+  centered: true,
+};
 
 const theme: MantineThemeOverride = {
   colors: {
@@ -44,17 +84,9 @@ const theme: MantineThemeOverride = {
     fontFamily: poppins.style.fontFamily,
   },
   components: {
-    Kbd: {
-      styles: {
-        root: {
-          minWidth: '1.5rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderBottomWidth: 1,
-        },
-      },
-    },
+    Kbd: defaultKbdProps,
+    TextInput: defaultTextInputProps,
+    Tooltip: defaultTooltipProps,
   },
 };
 
@@ -89,7 +121,9 @@ const App = ({ Component, pageProps }: AppProps) => {
             colorScheme,
           }}
         >
-          <Component {...pageProps} />
+          <ModalsProvider modalProps={defaultModalProps}>
+            <Component {...pageProps} />
+          </ModalsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </>
