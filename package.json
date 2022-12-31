@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn db:generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "db:generate": "yarn pnpify prisma generate"
+  },
+  "prisma": {
+    "schema": "src/server/prisma/schema.prisma"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",
@@ -25,6 +29,7 @@
     "@mantine/next": "^5.9.5",
     "@mantine/nprogress": "^5.9.5",
     "@next/font": "^13.0.7",
+    "@prisma/client": "^4.8.0",
     "@tabler/icons": "^1.117.0",
     "clsx": "^1.2.1",
     "mantine-datatable": "^1.7.32",
@@ -32,8 +37,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "^0.31.2",
-    "sort-by-typescript": "^1.2.3",
-    "typescript": "4.9.3"
+    "typescript": "4.9.3",
+    "zod": "^3.20.2",
+    "zod-validation-error": "^0.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
@@ -44,12 +50,15 @@
     "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "@yarnpkg/pnpify": "^4.0.0-rc.34",
     "eslint": "^8.27.0",
     "eslint-config-next": "^13.0.3",
     "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "prettier-plugin-prisma": "^4.8.0",
+    "prisma": "^4.8.0"
   },
   "engines": {
     "node": "^16",

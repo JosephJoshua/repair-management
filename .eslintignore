@@ -1,2 +1,3 @@
-/.yarn
-/.next
+/.yarn/*
+/.next/*
+/src/core/prisma/generated/*

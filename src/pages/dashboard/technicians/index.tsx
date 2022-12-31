@@ -1,7 +1,8 @@
-import { TechnicianEntryForm } from '@/components/features/technicians/entry-form';
-import { DeleteButton } from '@/components/shared/delete-button/';
-import { EmptyIndicator } from '@/components/shared/empty-indicator/';
-import { DashboardLayout } from '@/layouts/dashboard';
+import { DeleteButton } from '@/core/components/delete-button';
+import { EmptyIndicator } from '@/core/components/empty-indicator';
+import { DashboardLayout } from '@/core/layouts/dashboard';
+import sortBy from '@/core/utils/sortBy';
+import TechnicianEntryForm from '@/modules/technicians/components/TechnicianEntryForm';
 import {
   ActionIcon,
   Box,
@@ -21,8 +22,7 @@ import {
 } from 'mantine-datatable';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { useCallback, useState } from 'react';
-import sortBy from 'src/utils/sortBy';
+import { useRef, useState } from 'react';
 
 type Technician = {
   technicianId: number;
@@ -34,26 +34,59 @@ const data: Technician[] = Array.from({ length: 20 }).map((_, idx) => ({
   name: `Test ${idx}`,
 }));
 
+const PAGE_SIZE = 15;
+
 const TechniciansPage: NextPage = () => {
   const modals = useModals();
 
   const { ref: headingRef, height: headingHeight } = useElementSize();
+
+  const searchQuery = useRef<string>('');
+  const [page, setPage] = useState<number>(1);
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: 'technicianId',
     direction: 'asc',
   });
 
-  const [records, setRecords] = useState<Technician[]>(
-    sortBy(data, 'technicianId', 'asc')
-  );
+  const [records, setRecords] = useState<Technician[]>(data);
+  const [filteredRecords, setFilteredRecords] = useState<Technician[]>(data);
 
-  const handleSortStatusChange = useCallback((newVal: DataTableSortStatus) => {
-    setRecords((r) =>
-      sortBy(r, newVal.columnAccessor as keyof Technician, newVal.direction)
+  const updateRecords = ({
+    sortStatus: newSortStatus = sortStatus,
+    page: newPage = page,
+  }: {
+    sortStatus?: DataTableSortStatus;
+    page?: number;
+    query?: string;
+  }) => {
+    const from = (newPage - 1) * PAGE_SIZE;
+    const to = newPage * PAGE_SIZE;
+
+    // Not efficient but it's fine for now cause this is gonna be replaced anyways.
+    setRecords(
+      sortBy(
+        filteredRecords,
+        newSortStatus.columnAccessor as keyof Technician,
+        newSortStatus.direction
+      ).slice(from, to)
     );
+  };
 
+  const handleSortStatusChange = (newVal: DataTableSortStatus) => {
+    updateRecords({ sortStatus: newVal });
     setSortStatus(newVal);
-  }, []);
+  };
+
+  const handlePageChange = (newVal: number) => {
+    updateRecords({ page: newVal });
+    setPage(newVal);
+  };
+
+  const handleSearch = (query: string) => {
+    setFilteredRecords(data.filter((val) => val.name.includes(query)));
+    updateRecords({ query });
+    searchQuery.current = query;
+  };
 
   const handleAddNewTechnician = () => {
     const id = modals.openModal({
@@ -118,7 +151,7 @@ const TechniciansPage: NextPage = () => {
         <title>Daftar Teknisi | ReMana</title>
       </Head>
 
-      <DashboardLayout onAdd={handleAddNewTechnician}>
+      <DashboardLayout onAdd={handleAddNewTechnician} onSearch={handleSearch}>
         <Group ref={headingRef} position="apart" align="end">
           <div>
             <Title order={2} weight={600} mb={4}>
@@ -141,6 +174,10 @@ const TechniciansPage: NextPage = () => {
           <DataTable
             mt="md"
             sortStatus={sortStatus}
+            page={page}
+            recordsPerPage={PAGE_SIZE}
+            totalRecords={data.length}
+            onPageChange={handlePageChange}
             onSortStatusChange={handleSortStatusChange}
             columns={columns}
             records={records}
