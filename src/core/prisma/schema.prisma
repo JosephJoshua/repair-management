@@ -1,11 +1,13 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "generated"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  output          = "generated"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgTrgm(map: "pg_trgm")]
 }
 
 model Store {
@@ -32,6 +34,8 @@ model Technician {
   storeId      String    @map("store_id")
   store        Store     @relation(fields: [storeId], references: [storeId])
 
+  @@index([name(ops: raw("gin_trgm_ops"))], type: Gin)
+  @@index([storeId, createdAt])
   @@map("technicians")
 }
 

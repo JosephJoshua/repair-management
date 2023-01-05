@@ -1,7 +1,9 @@
+import SortDirection from '@/core/types/SortDirection';
+
 const sortBy = <T extends object>(
   arr: T[],
   by: keyof T,
-  direction: 'asc' | 'desc'
+  direction: SortDirection
 ) => {
   return arr.sort((a, b) => {
     const first = a[by];

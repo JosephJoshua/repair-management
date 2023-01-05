@@ -2,6 +2,8 @@ import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconCheck, IconPlus } from '@tabler/icons';
 import { FC } from 'react';
+import { useQueryClient } from 'react-query';
+import useAddTechnicianMutation from '../mutations/useAddTechnicianMutation';
 
 type TechnicianEntryFormValues = {
   name: string;
@@ -36,8 +38,16 @@ const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
     },
   });
 
-  const handleSubmit = (values: TechnicianEntryFormValues) => {
+  const queryClient = useQueryClient();
+  const addMutation = useAddTechnicianMutation(queryClient);
+
+  const handleSubmit = async (values: TechnicianEntryFormValues) => {
     console.log(type, values, technicianId);
+
+    if (type === 'add') {
+      await addMutation.mutateAsync({ name: values.name });
+    }
+
     onClose?.();
   };
 

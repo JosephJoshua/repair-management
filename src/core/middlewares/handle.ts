@@ -74,7 +74,12 @@ const handle = <
       }
 
       res.status(405).send({
-        error: `method not allowed. allowed methods: ${allowedMethodsStr}`,
+        error: {
+          type: 'MethodNotAllowed',
+          details: {
+            allowedMethods,
+          },
+        },
       });
 
       return;
