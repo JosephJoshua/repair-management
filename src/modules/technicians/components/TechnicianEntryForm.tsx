@@ -4,6 +4,7 @@ import { IconCheck, IconPlus } from '@tabler/icons';
 import { FC } from 'react';
 import { useQueryClient } from 'react-query';
 import useAddTechnicianMutation from '../mutations/useAddTechnicianMutation';
+import useEditTechnicianMutation from '../mutations/useEditTechnicianMutation';
 
 type TechnicianEntryFormValues = {
   name: string;
@@ -22,7 +23,7 @@ type TechnicianEditFormProps = {
 };
 
 export type TechnicianEntryFormProps = {
-  onClose?: () => void;
+  onClose: () => void;
 } & (TechnicianAddFormProps | TechnicianEditFormProps);
 
 const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
@@ -39,13 +40,17 @@ const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
   });
 
   const queryClient = useQueryClient();
+
   const addMutation = useAddTechnicianMutation(queryClient);
+  const editMutation = useEditTechnicianMutation(queryClient);
 
   const handleSubmit = async (values: TechnicianEntryFormValues) => {
     console.log(type, values, technicianId);
 
     if (type === 'add') {
       await addMutation.mutateAsync({ name: values.name });
+    } else if (type === 'edit') {
+      await editMutation.mutateAsync({ name: values.name, technicianId });
     }
 
     onClose?.();
@@ -68,6 +73,7 @@ const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
         leftIcon={
           type === 'add' ? <IconPlus size={16} /> : <IconCheck size={16} />
         }
+        loading={addMutation.isLoading || editMutation.isLoading}
       >
         {type === 'add' ? 'Tambah' : 'Simpan'}
       </Button>

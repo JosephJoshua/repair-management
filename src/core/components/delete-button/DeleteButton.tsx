@@ -14,9 +14,14 @@ import { FC, useState } from 'react';
 export type DeleteButtonProps = {
   onDelete?: () => void;
   message: string;
+  isDeleting?: boolean;
 };
 
-const DeleteButton: FC<DeleteButtonProps> = ({ onDelete, message }) => {
+const DeleteButton: FC<DeleteButtonProps> = ({
+  onDelete,
+  message,
+  isDeleting,
+}) => {
   const { shortcuts } = useShortcutContext();
   const [popupOpened, setPopupOpened] = useState<boolean>(false);
 
@@ -55,6 +60,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({ onDelete, message }) => {
               setPopupOpened(false);
               onDelete?.();
             }}
+            loading={isDeleting}
           >
             Ya
           </Button>

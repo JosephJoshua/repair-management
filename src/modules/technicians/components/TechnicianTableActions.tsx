@@ -3,6 +3,8 @@ import { ActionIcon, Group, Tooltip } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { IconEdit } from '@tabler/icons';
 import { FC } from 'react';
+import { useQueryClient } from 'react-query';
+import useDeleteTechnicianMutation from '../mutations/useDeleteTechnicianMutation';
 import TechnicianTableRow from '../types/TechnicianTableRow';
 import TechnicianEntryForm from './TechnicianEntryForm';
 
@@ -14,10 +16,15 @@ const TechnicianTableActions: FC<TechnicianTableActionsProps> = ({
   technician,
 }) => {
   const modals = useModals();
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useDeleteTechnicianMutation(queryClient);
 
   const handleEditTechnician = () => {
     const id = modals.openModal({
       title: 'Ubah Teknisi',
+      closeOnClickOutside: false,
+
       children: (
         <TechnicianEntryForm
           type="edit"
@@ -39,7 +46,8 @@ const TechnicianTableActions: FC<TechnicianTableActionsProps> = ({
 
       <DeleteButton
         message="Yakin ingin menghapus teknisi ini?"
-        onDelete={() => console.log('delete')}
+        onDelete={() => deleteMutation.mutate(technician.technicianId)}
+        isDeleting={deleteMutation.isLoading}
       />
     </Group>
   );

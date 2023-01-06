@@ -4,6 +4,8 @@ import { Prisma } from '@/core/prisma/generated';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
 import AddTechnicianRequest from '@/modules/technicians/types/AddTechnicianRequest';
 import AddTechnicianResponse from '@/modules/technicians/types/AddTechnicianResponse';
+import DeleteTechnicianRequest from '@/modules/technicians/types/DeleteTechnicianRequest';
+import EditTechnicianRequest from '@/modules/technicians/types/EditTechnicianRequest';
 import GetTechniciansResponse from '@/modules/technicians/types/GetTechniciansResponse';
 import { NextApiResponse } from 'next';
 import { toZod } from 'tozod';
@@ -28,6 +30,19 @@ const getSchema = z.object({
 const postSchema: toZod<{ body: AddTechnicianRequest }> = z.object({
   body: z.object({
     name: z.string().max(255),
+  }),
+});
+
+const putSchema: toZod<{ body: EditTechnicianRequest }> = z.object({
+  body: z.object({
+    technicianId: z.string(),
+    name: z.string().max(255),
+  }),
+});
+
+const deleteSchema: toZod<{ query: DeleteTechnicianRequest }> = z.object({
+  query: z.object({
+    technicianId: z.string(),
   }),
 });
 
@@ -79,9 +94,39 @@ export default handle({
         },
       });
 
-      res.status(200).send({
+      res.status(201).send({
         result: technician,
       });
+    },
+  },
+  put: {
+    schema: putSchema,
+    handler: async (req, res: NextApiResponse) => {
+      const { technicianId, name } = req.body;
+
+      await prisma.technician.update({
+        data: {
+          name,
+        },
+
+        where: {
+          technicianId,
+        },
+      });
+
+      res.status(204).end();
+    },
+  },
+  delete: {
+    schema: deleteSchema,
+    handler: async (req, res: NextApiResponse) => {
+      const { technicianId } = req.query;
+
+      await prisma.technician.delete({
+        where: { technicianId },
+      });
+
+      res.status(204).end();
     },
   },
 });

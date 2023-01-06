@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { QueryClient, useMutation } from 'react-query';
+import { TECHNICIANS_QUERY_KEY } from '../queries/useTechniciansQuery';
 import AddTechnicianRequest from '../types/AddTechnicianRequest';
 import AddTechnicianResponse from '../types/AddTechnicianResponse';
 
@@ -18,7 +19,7 @@ const useAddTechnicianMutation = (client: QueryClient) => {
     },
     {
       onSettled: () => {
-        client.invalidateQueries('technicians');
+        client.invalidateQueries(TECHNICIANS_QUERY_KEY);
       },
     }
   );

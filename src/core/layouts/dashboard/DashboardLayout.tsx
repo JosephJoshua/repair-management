@@ -22,7 +22,15 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({
   const searchBarRef = useRef<HTMLInputElement>(null);
 
   const shortcuts = [
-    ['s', () => searchBarRef.current?.focus()],
+    [
+      's',
+      () => {
+        if (searchBarRef.current == null) return;
+
+        searchBarRef.current.focus();
+        searchBarRef.current.select();
+      },
+    ],
     onAdd && ['a', () => onAdd()],
   ].filter(Boolean) as HotkeyItem[];
 

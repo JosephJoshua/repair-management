@@ -19,8 +19,17 @@ const fetchTechnicians = async (
   { limit, offset, sortBy, sortDirection, query }: FetchTechniciansParams
 ): Promise<GetTechniciansResponse> => {
   const { data } = await apiClient.get<GetTechniciansResponse>(
-    `/api/technicians/?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&query=${query}`,
-    { signal }
+    '/api/technicians',
+    {
+      signal,
+      params: {
+        offset,
+        limit,
+        sortBy,
+        sortDirection,
+        query,
+      },
+    }
   );
 
   return data;

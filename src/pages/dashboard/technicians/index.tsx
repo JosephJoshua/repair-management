@@ -18,6 +18,7 @@ const TechniciansPage: NextPage = () => {
   const handleAddNewTechnician = () => {
     const id = modals.openModal({
       title: 'Teknisi Baru',
+      closeOnClickOutside: false,
       children: (
         <TechnicianEntryForm type="add" onClose={() => modals.closeModal(id)} />
       ),
