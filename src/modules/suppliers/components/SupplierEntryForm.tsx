@@ -3,53 +3,53 @@ import { useForm } from '@mantine/form';
 import { IconCheck, IconPlus } from '@tabler/icons';
 import { FC } from 'react';
 import { useQueryClient } from 'react-query';
-import useAddTechnicianMutation from '../mutations/useAddTechnicianMutation';
-import useEditTechnicianMutation from '../mutations/useEditTechnicianMutation';
+import useAddSupplierMutation from '../mutations/useAddSupplierMutation';
+import useEditSupplierMutation from '../mutations/useEditSupplierMutation';
 
-type TechnicianEntryFormValues = {
+type SupplierEntryFormValues = {
   name: string;
 };
 
-type TechnicianAddFormProps = {
+type SupplierAddFormProps = {
   type: 'add';
-  initialValues?: TechnicianEntryFormValues;
-  technicianId?: undefined;
+  initialValues?: SupplierEntryFormValues;
+  supplierId?: undefined;
 };
 
-type TechnicianEditFormProps = {
+type SupplierEditFormProps = {
   type: 'edit';
-  initialValues: TechnicianEntryFormValues;
-  technicianId: string;
+  initialValues: SupplierEntryFormValues;
+  supplierId: string;
 };
 
-export type TechnicianEntryFormProps = {
+export type SupplierEntryFormProps = {
   onClose: () => void;
-} & (TechnicianAddFormProps | TechnicianEditFormProps);
+} & (SupplierAddFormProps | SupplierEditFormProps);
 
-const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
+const SupplierEntryForm: FC<SupplierEntryFormProps> = ({
   onClose,
   initialValues,
   type,
-  technicianId,
+  supplierId,
 }) => {
-  const form = useForm<TechnicianEntryFormValues>({
+  const form = useForm<SupplierEntryFormValues>({
     initialValues: initialValues || { name: '' },
     validate: {
-      name: (val) => !val && 'Nama teknisi harus diisi',
+      name: (val) => !val && 'Nama supplier harus diisi',
     },
   });
 
   const queryClient = useQueryClient();
 
-  const addMutation = useAddTechnicianMutation(queryClient);
-  const editMutation = useEditTechnicianMutation(queryClient);
+  const addMutation = useAddSupplierMutation(queryClient);
+  const editMutation = useEditSupplierMutation(queryClient);
 
-  const handleSubmit = async (values: TechnicianEntryFormValues) => {
+  const handleSubmit = async (values: SupplierEntryFormValues) => {
     if (type === 'add') {
       await addMutation.mutateAsync({ body: { name: values.name } });
     } else if (type === 'edit') {
       await editMutation.mutateAsync({
-        body: { name: values.name, technicianId },
+        body: { name: values.name, supplierId },
       });
     }
 
@@ -62,7 +62,7 @@ const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
         data-autofocus
         aria-required
         withAsterisk
-        label="Nama Teknisi"
+        label="Nama Supplier"
         {...form.getInputProps('name')}
       />
 
@@ -81,4 +81,4 @@ const TechnicianEntryForm: FC<TechnicianEntryFormProps> = ({
   );
 };
 
-export default TechnicianEntryForm;
+export default SupplierEntryForm;

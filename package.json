@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "husky install",
-    "db:generate": "yarn pnpify prisma generate"
+    "db:generate": "yarn pnpify prisma generate",
+    "db:push": "yarn pnpify prisma db push"
   },
   "prisma": {
     "schema": "src/core/prisma/schema.prisma"

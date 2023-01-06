@@ -6,8 +6,8 @@ const addTechnicianRequest = Prisma.validator<Prisma.TechnicianArgs>()({
   },
 });
 
-type AddTechnicianRequest = Prisma.TechnicianGetPayload<
-  typeof addTechnicianRequest
->;
+type AddTechnicianRequest = {
+  body: Prisma.TechnicianGetPayload<typeof addTechnicianRequest>;
+};
 
 export default AddTechnicianRequest;

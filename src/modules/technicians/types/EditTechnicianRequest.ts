@@ -7,8 +7,8 @@ const editTechnicianRequest = Prisma.validator<Prisma.TechnicianArgs>()({
   },
 });
 
-type EditTechnicianRequest = Prisma.TechnicianGetPayload<
-  typeof editTechnicianRequest
->;
+type EditTechnicianRequest = {
+  body: Prisma.TechnicianGetPayload<typeof editTechnicianRequest>;
+};
 
 export default EditTechnicianRequest;

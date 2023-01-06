@@ -9,7 +9,7 @@ const useEditTechnicianMutation = (client: QueryClient) => {
   return useMutation(
     EDIT_TECHNICIAN_MUTATION_KEY,
     (req: EditTechnicianRequest) => {
-      return axios.put('/api/technicians', req);
+      return axios.put('/api/technicians', req.body);
     },
     {
       onSettled: () => {

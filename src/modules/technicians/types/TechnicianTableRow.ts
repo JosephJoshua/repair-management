@@ -12,4 +12,10 @@ type TechnicianTableRow = Prisma.TechnicianGetPayload<
   typeof technicianTableRow
 >;
 
+export const TechnicianTableRowFields = {
+  technicianId: 'technicianId',
+  name: 'name',
+  createdAt: 'createdAt',
+};
+
 export default TechnicianTableRow;

@@ -1,4 +1,3 @@
-import { DrawerCategory } from '@/layouts/dashboard/app-drawer';
 import {
   IconAdjustments,
   IconBuildingStore,
@@ -18,6 +17,7 @@ import {
   IconTools,
   IconUser,
 } from '@tabler/icons';
+import { DrawerCategory } from './app-drawer/AppDrawer.types';
 
 export const drawerCategories = Object.freeze<DrawerCategory[]>([
   {
@@ -27,21 +27,21 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
       {
         key: 'repair-orders',
         title: 'Daftar RO (Repair Order)',
-        to: '/repair-orders',
+        to: '/dashboard/repair-orders',
         icon: IconFileInvoice,
         color: 'violet',
       },
       {
         key: 'under-warranty-repair-orders',
         title: 'Daftar RO dengan Garansi',
-        to: '/under-warranty-repair-orders',
+        to: '/dashboard/under-warranty-repair-orders',
         icon: IconShieldLock,
         color: 'orange',
       },
       {
         key: 'check-warranty',
         title: 'Cek Garansi RO',
-        to: '/check-warranty',
+        to: '/dashboard/check-warranty',
         icon: IconShieldCheck,
         color: 'green',
       },
@@ -54,42 +54,42 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
       {
         key: 'spareparts',
         title: 'Daftar Sparepart',
-        to: '/spareparts',
+        to: '/dashboard/spareparts',
         icon: IconBuildingWarehouse,
         color: 'cyan',
       },
       {
         key: 'sparepart-purchases',
         title: 'Pembelian Sparepart',
-        to: '/sparepart-purchases',
+        to: '/dashboard/sparepart-purchases',
         icon: IconShoppingCartPlus,
         color: 'grape',
       },
       {
         key: 'sparepart-purchase-returns',
         title: 'Retur Pembelian',
-        to: '/sparepart-purchase-returns',
+        to: '/dashboard/sparepart-purchase-returns',
         icon: IconShoppingCartX,
         color: 'red',
       },
       {
         key: 'sparepart-usage',
         title: 'Pemakaian Sparepart',
-        to: '/sparepart-usage',
+        to: '/dashboard/sparepart-usage',
         icon: IconCodePlus,
         color: 'grape',
       },
       {
         key: 'sparepart-usage-returns',
         title: 'Retur Pemakaian',
-        to: '/sparepart-usage-returns',
+        to: '/dashboard/sparepart-usage-returns',
         icon: IconCodeMinus,
         color: 'red',
       },
       {
         key: 'stock-opname',
         title: 'Stock Opname',
-        to: '/stock-opname',
+        to: '/dashboard/stock-opname',
         icon: IconAdjustments,
         color: 'indigo',
       },
@@ -102,7 +102,7 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
       {
         key: 'users',
         title: 'Daftar Pengguna',
-        to: '/users',
+        to: '/dashboard/users',
         icon: IconUser,
         color: 'yellow',
       },
@@ -116,35 +116,35 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
       {
         key: 'suppliers',
         title: 'Daftar Supplier',
-        to: '/suppliers',
+        to: '/dashboard/suppliers',
         icon: IconBuildingStore,
         color: 'violet',
       },
       {
         key: 'devices',
         title: 'Daftar Perangkat',
-        to: '/devices',
+        to: '/dashboard/devices',
         icon: IconDeviceDesktop,
         color: 'teal',
       },
       {
         key: 'damages',
         title: 'Daftar Kerusakan',
-        to: '/damages',
+        to: '/dashboard/damages',
         icon: IconFlame,
         color: 'red',
       },
       {
         key: 'conditions',
         title: 'Daftar Kondisi',
-        to: '/conditions',
+        to: '/dashboard/conditions',
         icon: IconExclamationCircle,
         color: 'orange',
       },
       {
         key: 'warranty-periods',
         title: 'Daftar Masa Garansi',
-        to: '/warranty-periods',
+        to: '/dashboard/warranty-periods',
         icon: IconHourglass,
         color: 'green',
       },
@@ -157,7 +157,7 @@ export const drawerCategories = Object.freeze<DrawerCategory[]>([
       {
         key: 'store-settings',
         title: 'Pengaturan Toko',
-        to: '/store-settings',
+        to: '/dashboard/store-settings',
         icon: IconSettings,
       },
     ],

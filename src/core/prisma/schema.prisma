@@ -21,6 +21,7 @@ model Store {
   disabledAt   DateTime?    @map("disabled_at")
   technicians  Technician[]
   users        User[]
+  Supplier     Supplier[]
 
   @@map("stores")
 }
@@ -37,6 +38,20 @@ model Technician {
   @@index([name(ops: raw("gin_trgm_ops"))], type: Gin)
   @@index([storeId, createdAt])
   @@map("technicians")
+}
+
+model Supplier {
+  supplierId String    @id @default(cuid()) @map("supplier_id")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  deletedAt  DateTime? @map("deleted_at")
+  name       String
+  storeId    String    @map("store_id")
+  store      Store     @relation(fields: [storeId], references: [storeId])
+
+  @@index([name(ops: raw("gin_trgm_ops"))], type: Gin)
+  @@index([storeId, createdAt])
+  @@map("suppliers")
 }
 
 // === next-auth models ===

@@ -1,12 +1,12 @@
 import handle from '@/core/middlewares/handle';
 import prisma from '@/core/prisma';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
-import AddTechnicianRequest from '@/modules/technicians/types/AddTechnicianRequest';
-import AddTechnicianResponse from '@/modules/technicians/types/AddTechnicianResponse';
-import DeleteTechnicianRequest from '@/modules/technicians/types/DeleteTechnicianRequest';
-import EditTechnicianRequest from '@/modules/technicians/types/EditTechnicianRequest';
-import GetTechniciansResponse from '@/modules/technicians/types/GetTechniciansResponse';
-import { TechnicianTableRowFields } from '@/modules/technicians/types/TechnicianTableRow';
+import AddSupplierRequest from '@/modules/suppliers/types/AddSupplierRequest';
+import AddSupplierResponse from '@/modules/suppliers/types/AddSupplierResponse';
+import DeleteSupplierRequest from '@/modules/suppliers/types/DeleteTechnicianRequest';
+import EditSupplierRequest from '@/modules/suppliers/types/EditSupplierRequest';
+import GetSuppliersResponse from '@/modules/suppliers/types/GetSuppliersResponse';
+import { SupplierTableRowFields } from '@/modules/suppliers/types/SupplierTableRow';
 import { NextApiResponse } from 'next';
 import { toZod } from 'tozod';
 import { z } from 'zod';
@@ -17,9 +17,9 @@ const getSchema = z.object({
     offset: z.coerce.number().optional().default(0),
     limit: z.coerce.number().optional().default(10),
     sortBy: z
-      .nativeEnum(TechnicianTableRowFields)
+      .nativeEnum(SupplierTableRowFields)
       .optional()
-      .default('technicianId'),
+      .default('supplierId'),
     sortDirection: z
       .nativeEnum(SortDirectionObjectEnum)
       .optional()
@@ -27,33 +27,33 @@ const getSchema = z.object({
   }),
 });
 
-const postSchema: toZod<AddTechnicianRequest> = z.object({
+const postSchema: toZod<AddSupplierRequest> = z.object({
   body: z.object({
     name: z.string().max(255),
   }),
 });
 
-const putSchema: toZod<EditTechnicianRequest> = z.object({
+const putSchema: toZod<EditSupplierRequest> = z.object({
   body: z.object({
-    technicianId: z.string(),
     name: z.string().max(255),
+    supplierId: z.string(),
   }),
 });
 
-const deleteSchema: toZod<DeleteTechnicianRequest> = z.object({
+const deleteSchema: toZod<DeleteSupplierRequest> = z.object({
   query: z.object({
-    technicianId: z.string(),
+    supplierId: z.string(),
   }),
 });
 
 export default handle({
   get: {
     schema: getSchema,
-    handler: async (req, res: NextApiResponse<GetTechniciansResponse>) => {
-      const { limit, offset, sortBy, sortDirection, query } = req.query;
+    handler: async (req, res: NextApiResponse<GetSuppliersResponse>) => {
+      const { limit, offset, query, sortBy, sortDirection } = req.query;
 
-      const [technicians, count] = await Promise.all([
-        prisma.technician.findMany({
+      const [suppliers, count] = await Promise.all([
+        prisma.supplier.findMany({
           take: limit,
           skip: offset,
           orderBy: {
@@ -66,13 +66,13 @@ export default handle({
             },
           },
         }),
-        prisma.technician.count({
+        prisma.supplier.count({
           where: { name: { contains: query, mode: 'insensitive' } },
         }),
       ]);
 
       res.status(200).send({
-        result: technicians,
+        result: suppliers,
         metadata: {
           total_count: count,
           offset,
@@ -83,10 +83,10 @@ export default handle({
   },
   post: {
     schema: postSchema,
-    handler: async (req, res: NextApiResponse<AddTechnicianResponse>) => {
+    handler: async (req, res: NextApiResponse<AddSupplierResponse>) => {
       const { name } = req.body;
 
-      const technician = await prisma.technician.create({
+      const supplier = await prisma.supplier.create({
         data: {
           name,
           // TODO:
@@ -95,22 +95,21 @@ export default handle({
       });
 
       res.status(201).send({
-        result: technician,
+        result: supplier,
       });
     },
   },
   put: {
     schema: putSchema,
     handler: async (req, res: NextApiResponse) => {
-      const { technicianId, name } = req.body;
+      const { supplierId, name } = req.body;
 
-      await prisma.technician.update({
+      await prisma.supplier.update({
         data: {
           name,
         },
-
         where: {
-          technicianId,
+          supplierId,
         },
       });
 
@@ -120,10 +119,10 @@ export default handle({
   delete: {
     schema: deleteSchema,
     handler: async (req, res: NextApiResponse) => {
-      const { technicianId } = req.query;
+      const { supplierId } = req.query;
 
-      await prisma.technician.delete({
-        where: { technicianId },
+      await prisma.supplier.delete({
+        where: { supplierId },
       });
 
       res.status(204).end();

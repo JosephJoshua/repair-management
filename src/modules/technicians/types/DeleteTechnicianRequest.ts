@@ -6,8 +6,8 @@ const deleteTechnicianRequest = Prisma.validator<Prisma.TechnicianArgs>()({
   },
 });
 
-type DeleteTechnicianRequest = Prisma.TechnicianGetPayload<
-  typeof deleteTechnicianRequest
->;
+type DeleteTechnicianRequest = {
+  query: Prisma.TechnicianGetPayload<typeof deleteTechnicianRequest>;
+};
 
 export default DeleteTechnicianRequest;

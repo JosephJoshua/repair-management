@@ -4,32 +4,29 @@ import { useModals } from '@mantine/modals';
 import { IconEdit } from '@tabler/icons';
 import { FC } from 'react';
 import { useQueryClient } from 'react-query';
-import useDeleteTechnicianMutation from '../mutations/useDeleteTechnicianMutation';
-import TechnicianTableRow from '../types/TechnicianTableRow';
-import TechnicianEntryForm from './TechnicianEntryForm';
+import useDeleteSupplierMutation from '../mutations/useDeleteSupplierMutation';
+import SupplierTableRow from '../types/SupplierTableRow';
+import SupplierEntryForm from './SupplierEntryForm';
 
-export type TechnicianTableActionsProps = {
-  technician: TechnicianTableRow;
+export type SupplierTableActionsProps = {
+  supplier: SupplierTableRow;
 };
 
-const TechnicianTableActions: FC<TechnicianTableActionsProps> = ({
-  technician,
-}) => {
+const SupplierTableActions: FC<SupplierTableActionsProps> = ({ supplier }) => {
   const modals = useModals();
   const queryClient = useQueryClient();
 
-  const deleteMutation = useDeleteTechnicianMutation(queryClient);
+  const deleteMutation = useDeleteSupplierMutation(queryClient);
 
-  const handleEditTechnician = () => {
+  const handleEditSupplier = () => {
     const id = modals.openModal({
-      title: 'Ubah Teknisi',
+      title: 'Ubah Supplier',
       closeOnClickOutside: false,
-
       children: (
-        <TechnicianEntryForm
+        <SupplierEntryForm
           type="edit"
-          technicianId={technician.technicianId.toString()}
-          initialValues={technician}
+          supplierId={supplier.supplierId.toString()}
+          initialValues={supplier}
           onClose={() => modals.closeModal(id)}
         />
       ),
@@ -39,16 +36,16 @@ const TechnicianTableActions: FC<TechnicianTableActionsProps> = ({
   return (
     <Group spacing={4} pr={4} position="center" noWrap>
       <Tooltip label="Ubah">
-        <ActionIcon color="blue" onClick={() => handleEditTechnician()}>
+        <ActionIcon color="blue" onClick={() => handleEditSupplier()}>
           <IconEdit size={16} />
         </ActionIcon>
       </Tooltip>
 
       <DeleteButton
-        message="Yakin ingin menghapus teknisi ini?"
+        message="Yakin ingin menghapus supplier ini?"
         onDelete={() =>
           deleteMutation.mutate({
-            query: { technicianId: technician.technicianId },
+            query: { supplierId: supplier.supplierId },
           })
         }
         isDeleting={deleteMutation.isLoading}
@@ -57,4 +54,4 @@ const TechnicianTableActions: FC<TechnicianTableActionsProps> = ({
   );
 };
 
-export default TechnicianTableActions;
+export default SupplierTableActions;

@@ -9,10 +9,10 @@ export const ADD_TECHNICIAN_MUTATION_KEY = 'add-technician';
 const useAddTechnicianMutation = (client: QueryClient) => {
   return useMutation(
     ADD_TECHNICIAN_MUTATION_KEY,
-    async (technician: AddTechnicianRequest) => {
+    async (req: AddTechnicianRequest) => {
       const { data } = await axios.post<AddTechnicianResponse>(
         '/api/technicians',
-        technician
+        req.body
       );
 
       return data.result;
