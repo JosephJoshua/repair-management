@@ -63,11 +63,13 @@ const TechnicianTable: FC<TechnicianTableProps> = ({
 
   const { data, error, isError, isFetching, isPreviousData, refetch } =
     useTechniciansQuery({
-      limit: PAGE_SIZE,
-      offset: PAGE_SIZE * (page - 1),
-      sortBy: sortStatus.columnAccessor as keyof TechnicianTableRow,
-      sortDirection: sortStatus.direction,
-      query: searchQuery,
+      query: {
+        limit: PAGE_SIZE,
+        offset: PAGE_SIZE * (page - 1),
+        sortBy: sortStatus.columnAccessor as keyof TechnicianTableRow,
+        sortDirection: sortStatus.direction,
+        query: searchQuery,
+      },
     });
 
   useEffect(() => {
@@ -78,11 +80,13 @@ const TechnicianTable: FC<TechnicianTableProps> = ({
 
     if (!isPreviousData && hasMore) {
       prefetchTechnicians(queryClient, {
-        offset: PAGE_SIZE * page,
-        limit: PAGE_SIZE,
-        sortBy: sortStatus.columnAccessor as keyof TechnicianTableRow,
-        sortDirection: sortStatus.direction,
-        query: searchQuery,
+        query: {
+          offset: PAGE_SIZE * page,
+          limit: PAGE_SIZE,
+          sortBy: sortStatus.columnAccessor as keyof TechnicianTableRow,
+          sortDirection: sortStatus.direction,
+          query: searchQuery,
+        },
       });
     }
   }, [

@@ -1,62 +1,39 @@
 import apiClient from '@/core/axios/apiClient';
-import { SortDirection } from '@/core/types/SortDirection';
 import { QueryClient, useQuery } from 'react-query';
+import GetTechniciansRequest from '../types/GetTechniciansRequest';
 import GetTechniciansResponse from '../types/GetTechniciansResponse';
-import TechnicianTableRow from '../types/TechnicianTableRow';
 
 export const TECHNICIANS_QUERY_KEY = 'technicians';
 
-export type FetchTechniciansParams = {
-  limit: number;
-  offset: number;
-  sortBy: keyof TechnicianTableRow;
-  sortDirection: SortDirection;
-  query: string;
-};
-
 const fetchTechnicians = async (
   signal: AbortSignal | undefined,
-  { limit, offset, sortBy, sortDirection, query }: FetchTechniciansParams
+  req: GetTechniciansRequest
 ): Promise<GetTechniciansResponse> => {
   const { data } = await apiClient.get<GetTechniciansResponse>(
     '/api/technicians',
     {
       signal,
-      params: {
-        offset,
-        limit,
-        sortBy,
-        sortDirection,
-        query,
-      },
+      params: req.query,
     }
   );
 
   return data;
 };
 
-export const useTechniciansQuery = ({
-  limit,
-  offset,
-  sortBy,
-  sortDirection,
-  query,
-}: FetchTechniciansParams) => {
+export const useTechniciansQuery = (req: GetTechniciansRequest) => {
   return useQuery(
-    [TECHNICIANS_QUERY_KEY, limit, offset, sortBy, sortDirection, query],
-    ({ signal }) =>
-      fetchTechnicians(signal, { limit, offset, sortBy, sortDirection, query }),
+    [TECHNICIANS_QUERY_KEY, ...Object.values(req.query)],
+    ({ signal }) => fetchTechnicians(signal, req),
     { keepPreviousData: true, staleTime: 5 * 1_000 }
   );
 };
 
 export const prefetchTechnicians = (
   client: QueryClient,
-  { limit, offset, sortBy, sortDirection, query }: FetchTechniciansParams
+  req: GetTechniciansRequest
 ) => {
   return client.prefetchQuery(
-    [TECHNICIANS_QUERY_KEY, limit, offset, sortBy, sortDirection, query],
-    ({ signal }) =>
-      fetchTechnicians(signal, { limit, offset, sortBy, sortDirection, query })
+    [TECHNICIANS_QUERY_KEY, ...Object.values(req.query)],
+    ({ signal }) => fetchTechnicians(signal, req)
   );
 };

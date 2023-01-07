@@ -1,12 +1,12 @@
 import handle from '@/core/middlewares/handle';
 import prisma from '@/core/prisma';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
-import AddSupplierRequest from '@/modules/suppliers/types/AddSupplierRequest';
-import AddSupplierResponse from '@/modules/suppliers/types/AddSupplierResponse';
-import DeleteSupplierRequest from '@/modules/suppliers/types/DeleteTechnicianRequest';
-import EditSupplierRequest from '@/modules/suppliers/types/EditSupplierRequest';
-import GetSuppliersResponse from '@/modules/suppliers/types/GetSuppliersResponse';
-import { SupplierTableRowFields } from '@/modules/suppliers/types/SupplierTableRow';
+import AddDamageRequest from '@/modules/damages/types/AddDamageRequest';
+import AddDamageResponse from '@/modules/damages/types/AddDamageResponse';
+import { DamageTableRowFields } from '@/modules/damages/types/DamageTableRow';
+import DeleteDamageRequest from '@/modules/damages/types/DeleteDamageRequest';
+import EditDamageRequest from '@/modules/damages/types/EditDamageRequest';
+import GetDamagesResponse from '@/modules/damages/types/GetDamagesResponse';
 import { NextApiResponse } from 'next';
 import { toZod } from 'tozod';
 import { z } from 'zod';
@@ -16,10 +16,7 @@ const getSchema = z.object({
     query: z.string().max(255).optional().default(''),
     offset: z.coerce.number().optional().default(0),
     limit: z.coerce.number().optional().default(10),
-    sortBy: z
-      .nativeEnum(SupplierTableRowFields)
-      .optional()
-      .default('supplierId'),
+    sortBy: z.nativeEnum(DamageTableRowFields).optional().default('damageId'),
     sortDirection: z
       .nativeEnum(SortDirectionObjectEnum)
       .optional()
@@ -27,33 +24,33 @@ const getSchema = z.object({
   }),
 });
 
-const postSchema: toZod<AddSupplierRequest> = z.object({
+const postSchema: toZod<AddDamageRequest> = z.object({
   body: z.object({
     name: z.string().max(255),
   }),
 });
 
-const putSchema: toZod<EditSupplierRequest> = z.object({
+const putSchema: toZod<EditDamageRequest> = z.object({
   body: z.object({
     name: z.string().max(255),
-    supplierId: z.string(),
+    damageId: z.string(),
   }),
 });
 
-const deleteSchema: toZod<DeleteSupplierRequest> = z.object({
+const deleteSchema: toZod<DeleteDamageRequest> = z.object({
   query: z.object({
-    supplierId: z.string(),
+    damageId: z.string(),
   }),
 });
 
 export default handle({
   get: {
     schema: getSchema,
-    handler: async (req, res: NextApiResponse<GetSuppliersResponse>) => {
+    handler: async (req, res: NextApiResponse<GetDamagesResponse>) => {
       const { limit, offset, query, sortBy, sortDirection } = req.query;
 
-      const [suppliers, count] = await Promise.all([
-        prisma.supplier.findMany({
+      const [damages, count] = await Promise.all([
+        prisma.damage.findMany({
           take: limit,
           skip: offset,
           orderBy: {
@@ -66,13 +63,13 @@ export default handle({
             },
           },
         }),
-        prisma.supplier.count({
+        prisma.damage.count({
           where: { name: { contains: query, mode: 'insensitive' } },
         }),
       ]);
 
       res.status(200).send({
-        result: suppliers,
+        result: damages,
         metadata: {
           total_count: count,
           offset,
@@ -83,10 +80,10 @@ export default handle({
   },
   post: {
     schema: postSchema,
-    handler: async (req, res: NextApiResponse<AddSupplierResponse>) => {
+    handler: async (req, res: NextApiResponse<AddDamageResponse>) => {
       const { name } = req.body;
 
-      const supplier = await prisma.supplier.create({
+      const damage = await prisma.damage.create({
         data: {
           name,
           // TODO:
@@ -95,21 +92,21 @@ export default handle({
       });
 
       res.status(201).send({
-        result: supplier,
+        result: damage,
       });
     },
   },
   put: {
     schema: putSchema,
     handler: async (req, res: NextApiResponse) => {
-      const { supplierId, name } = req.body;
+      const { damageId, name } = req.body;
 
-      await prisma.supplier.update({
+      await prisma.damage.update({
         data: {
           name,
         },
         where: {
-          supplierId,
+          damageId,
         },
       });
 
@@ -119,10 +116,10 @@ export default handle({
   delete: {
     schema: deleteSchema,
     handler: async (req, res: NextApiResponse) => {
-      const { supplierId } = req.query;
+      const { damageId } = req.query;
 
-      await prisma.supplier.delete({
-        where: { supplierId },
+      await prisma.damage.delete({
+        where: { damageId },
       });
 
       res.status(204).end();

@@ -7,22 +7,19 @@ import {
 } from 'mantine-datatable';
 import { FC, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import {
-  prefetchSuppliers,
-  useSuppliersQuery,
-} from '../queries/useSuppliersQuery';
-import SupplierTableRow from '../types/SupplierTableRow';
-import SupplierTableActions from './SupplierTableActions';
+import { prefetchDamages, useDamagesQuery } from '../queries/useDamagesQuery';
+import DamageTableRow from '../types/DamageTableRow';
+import DamageTableActions from './DamageTableActions';
 
-export type SupplierTableProps = {
+export type DamageTableProps = {
   searchQuery?: string;
 };
 
 const PAGE_SIZE = 15;
 
-const columns: DataTableColumn<SupplierTableRow>[] = [
+const columns: DataTableColumn<DamageTableRow>[] = [
   {
-    accessor: 'supplierId',
+    accessor: 'damageId',
     hidden: true,
   },
   {
@@ -37,18 +34,18 @@ const columns: DataTableColumn<SupplierTableRow>[] = [
     accessor: 'createdAt',
     title: 'Tanggal Pembuatan',
     sortable: true,
-    render: (supplier) => supplier.createdAt.toLocaleDateString(),
+    render: (damage) => damage.createdAt.toLocaleDateString(),
   },
   {
     accessor: 'actions',
     title: 'Aksi',
     textAlignment: 'center',
     cellsSx: { paddingLeft: 16, paddingRight: 16 },
-    render: (supplier) => <SupplierTableActions supplier={supplier} />,
+    render: (damage) => <DamageTableActions damage={damage} />,
   },
 ];
 
-const SupplierTable: FC<SupplierTableProps> = ({
+const DamageTable: FC<DamageTableProps> = ({
   searchQuery: searchQueryProp,
 }) => {
   const [page, setPage] = useState<number>(1);
@@ -62,11 +59,11 @@ const SupplierTable: FC<SupplierTableProps> = ({
   const queryClient = useQueryClient();
 
   const { data, error, isError, isFetching, isPreviousData, refetch } =
-    useSuppliersQuery({
+    useDamagesQuery({
       query: {
         limit: PAGE_SIZE,
         offset: PAGE_SIZE * (page - 1),
-        sortBy: sortStatus.columnAccessor as keyof SupplierTableRow,
+        sortBy: sortStatus.columnAccessor as keyof DamageTableRow,
         sortDirection: sortStatus.direction,
         query: searchQuery,
       },
@@ -79,11 +76,11 @@ const SupplierTable: FC<SupplierTableProps> = ({
     const hasMore = offset + limit < total_count;
 
     if (!isPreviousData && hasMore) {
-      prefetchSuppliers(queryClient, {
+      prefetchDamages(queryClient, {
         query: {
           offset: PAGE_SIZE * page,
           limit: PAGE_SIZE,
-          sortBy: sortStatus.columnAccessor as keyof SupplierTableRow,
+          sortBy: sortStatus.columnAccessor as keyof DamageTableRow,
           sortDirection: sortStatus.direction,
           query: searchQuery,
         },
@@ -124,11 +121,11 @@ const SupplierTable: FC<SupplierTableProps> = ({
       borderRadius="md"
       verticalSpacing="sm"
       horizontalSpacing="md"
-      idAccessor="supplierId"
+      idAccessor="damageId"
       striped
       withBorder
     />
   );
 };
 
-export default SupplierTable;
+export default DamageTable;

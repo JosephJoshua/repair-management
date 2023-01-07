@@ -8,8 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "husky install",
+    "prisma:studio": "yarn pnpify prisma studio",
     "db:generate": "yarn pnpify prisma generate",
-    "db:push": "yarn pnpify prisma db push"
+    "db:push": "yarn pnpify prisma db push",
+    "dev:migrate": "yarn pnpify prisma migrate dev"
   },
   "prisma": {
     "schema": "src/core/prisma/schema.prisma"
