@@ -17,6 +17,10 @@ const useDeleteDamageMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(DAMAGES_QUERY_KEY);
       },
+      meta: {
+        action: 'delete',
+        object: 'kerusakan',
+      },
     }
   );
 };

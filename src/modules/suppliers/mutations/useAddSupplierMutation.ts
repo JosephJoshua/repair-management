@@ -21,6 +21,10 @@ const useAddSupplierMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(SUPPLIERS_QUERY_KEY);
       },
+      meta: {
+        action: 'add',
+        object: 'supplier',
+      },
     }
   );
 };

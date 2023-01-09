@@ -17,6 +17,10 @@ const useDeleteTechnicianMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(TECHNICIANS_QUERY_KEY);
       },
+      meta: {
+        action: 'delete',
+        object: 'teknisi',
+      },
     }
   );
 };

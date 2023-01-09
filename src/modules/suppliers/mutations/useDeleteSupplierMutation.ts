@@ -17,6 +17,10 @@ const useDeleteSupplierMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(SUPPLIERS_QUERY_KEY);
       },
+      meta: {
+        action: 'delete',
+        object: 'supplier',
+      },
     }
   );
 };

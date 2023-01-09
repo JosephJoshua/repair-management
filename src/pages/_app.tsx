@@ -1,5 +1,8 @@
 import { defaultModalProps } from '@/core/mantine/defaultProps';
 import theme from '@/core/mantine/theme';
+import MutationMeta, {
+  MutationActionMessages,
+} from '@/core/types/MutationMeta';
 import {
   ColorScheme,
   ColorSchemeProvider,
@@ -19,6 +22,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import {
   Hydrate,
+  MutationCache,
   QueryCache,
   QueryClient,
   QueryClientProvider,
@@ -62,6 +66,43 @@ const App = ({ Component, pageProps }: AppProps) => {
                 autoClose: 10 * 1_000,
               });
             }
+          },
+        }),
+        mutationCache: new MutationCache({
+          onError: (_1, _2, _3, mutation) => {
+            const id =
+              'react-mutation-error' + Date.now() + Math.random() * 1000;
+
+            const meta = mutation.meta as MutationMeta;
+            const message = `Gagal ${MutationActionMessages[meta.action]} ${
+              meta.object
+            }.`;
+
+            showNotification({
+              title: 'Terjadi Kesalahan',
+              id,
+              message: (
+                <Group spacing={4}>
+                  <span>{message}</span>
+
+                  <UnstyledButton
+                    sx={(theme) => ({
+                      fontSize: theme.fontSizes.sm,
+                      color: theme.colors[theme.primaryColor][4],
+                      '&:hover': {
+                        color: theme.colors[theme.primaryColor][2],
+                      },
+                    })}
+                    onClick={() => {
+                      mutation.execute();
+                      hideNotification(id);
+                    }}
+                  >
+                    Coba Kembali
+                  </UnstyledButton>
+                </Group>
+              ),
+            });
           },
         }),
       })

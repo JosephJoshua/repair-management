@@ -15,6 +15,10 @@ const useEditTechnicianMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(TECHNICIANS_QUERY_KEY);
       },
+      meta: {
+        action: 'edit',
+        object: 'teknisi',
+      },
     }
   );
 };

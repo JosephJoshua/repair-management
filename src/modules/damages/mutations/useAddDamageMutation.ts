@@ -21,6 +21,10 @@ const useAddDamageMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(DAMAGES_QUERY_KEY);
       },
+      meta: {
+        action: 'add',
+        object: 'kerusakan',
+      },
     }
   );
 };

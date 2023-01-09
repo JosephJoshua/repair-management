@@ -15,6 +15,10 @@ const useEditSupplierMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(SUPPLIERS_QUERY_KEY);
       },
+      meta: {
+        action: 'edit',
+        object: 'supplier',
+      },
     }
   );
 };

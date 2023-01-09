@@ -21,6 +21,10 @@ const useAddTechnicianMutation = (client: QueryClient) => {
       onSettled: () => {
         client.invalidateQueries(TECHNICIANS_QUERY_KEY);
       },
+      meta: {
+        action: 'add',
+        object: 'teknisi',
+      },
     }
   );
 };
