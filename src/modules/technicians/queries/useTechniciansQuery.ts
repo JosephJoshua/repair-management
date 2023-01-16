@@ -20,11 +20,14 @@ const fetchTechnicians = async (
   return data;
 };
 
-export const useTechniciansQuery = (req: GetTechniciansRequest) => {
+export const useTechniciansQuery = (
+  req: GetTechniciansRequest,
+  enabled = true
+) => {
   return useQuery(
     [TECHNICIANS_QUERY_KEY, ...Object.values(req.query)],
     ({ signal }) => fetchTechnicians(signal, req),
-    { keepPreviousData: true, staleTime: 5 * 1_000 }
+    { keepPreviousData: true, staleTime: 5 * 1_000, enabled }
   );
 };
 

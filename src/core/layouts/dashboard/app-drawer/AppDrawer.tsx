@@ -1,15 +1,21 @@
+import { Store } from '@/core/prisma/generated';
+import { useStoresQuery } from '@/modules/stores/queries/useStoresQuery';
 import {
   Accordion,
+  ActionIcon,
   Avatar,
   Box,
   Group,
   Navbar,
   ScrollArea,
+  Space,
   Stack,
   Text,
   ThemeIcon,
 } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
+import { IconLogout } from '@tabler/icons';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC, useMemo } from 'react';
@@ -23,6 +29,16 @@ export type AppDrawerProps = {
 const AppDrawer: FC<AppDrawerProps> = ({ categories }) => {
   const { classes, cx } = useStyles();
   const router = useRouter();
+  const session = useSession();
+
+  const { data, isLoading } = useStoresQuery(
+    {
+      query: { storeId: session?.data?.user.storeId },
+    },
+    session.status === 'authenticated' && session.data != null
+  );
+
+  const store = data == null ? null : (data.result as Store);
 
   // `useLocalStorage` doesn't allow passing in a function
   // for the `defaultValue` so we have to put this in `useMemo`
@@ -107,19 +123,42 @@ const AppDrawer: FC<AppDrawerProps> = ({ categories }) => {
         </Accordion>
       </Navbar.Section>
 
-      <Navbar.Section>
-        <Group className={classes.userBar}>
-          <Avatar radius="xl" />
-          <Box sx={{ flexGrow: 1 }}>
-            <Text size="sm" weight={600} lh={1.2}>
-              Admin
-            </Text>
-            <Text size="sm" color="dimmed" weight={500}>
-              Point Service Center
-            </Text>
-          </Box>
-        </Group>
-      </Navbar.Section>
+      {session.status === 'authenticated' && (
+        <Navbar.Section>
+          <Group className={classes.userBar} noWrap>
+            <Avatar radius="xl" />
+            <Box
+              sx={{
+                flexGrow: 1,
+                whiteSpace: 'normal',
+                wordBreak: 'break-word',
+              }}
+            >
+              <Text size="sm" weight={600} lh={1.2}>
+                {session.data.user.name}
+              </Text>
+
+              {!isLoading && (
+                <Text
+                  size="sm"
+                  color="dimmed"
+                  weight={500}
+                  lineClamp={2}
+                  sx={{ lineHeight: 1.25, marginTop: '2px' }}
+                >
+                  {store?.name}
+                </Text>
+              )}
+            </Box>
+
+            <Space />
+
+            <ActionIcon onClick={() => signOut()}>
+              <IconLogout />
+            </ActionIcon>
+          </Group>
+        </Navbar.Section>
+      )}
     </Navbar>
   );
 };

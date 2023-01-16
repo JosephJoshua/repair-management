@@ -17,6 +17,7 @@ import {
   NotificationsProvider,
   showNotification,
 } from '@mantine/notifications';
+import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -29,7 +30,7 @@ import {
 } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -126,30 +127,35 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
       </Head>
 
-      <QueryClientProvider client={queryClient}>
-        <ColorSchemeProvider
-          colorScheme={colorScheme}
-          toggleColorScheme={toggleColorScheme}
-        >
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              ...theme,
-              colorScheme,
-            }}
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
+          <ColorSchemeProvider
+            colorScheme={colorScheme}
+            toggleColorScheme={toggleColorScheme}
           >
-            <ModalsProvider modalProps={defaultModalProps}>
-              <NotificationsProvider>
-                <Hydrate state={pageProps.dehydratedState}>
-                  <Component {...pageProps} />
-                </Hydrate>
-                <ReactQueryDevtools initialIsOpen={false} />
-              </NotificationsProvider>
-            </ModalsProvider>
-          </MantineProvider>
-        </ColorSchemeProvider>
-      </QueryClientProvider>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                ...theme,
+                colorScheme,
+              }}
+            >
+              <ModalsProvider modalProps={defaultModalProps}>
+                <NotificationsProvider>
+                  <Hydrate state={pageProps.dehydratedState}>
+                    <Component {...pageProps} />
+                  </Hydrate>
+                  <ReactQueryDevtools
+                    initialIsOpen={false}
+                    position="bottom-right"
+                  />
+                </NotificationsProvider>
+              </ModalsProvider>
+            </MantineProvider>
+          </ColorSchemeProvider>
+        </QueryClientProvider>
+      </SessionProvider>
     </>
   );
 };

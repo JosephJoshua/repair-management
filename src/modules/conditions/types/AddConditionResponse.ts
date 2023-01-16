@@ -1,6 +1,7 @@
+import DefaultResponse from '@/core/types/DefaultResponse';
 import ConditionTableRow from './ConditionTableRow';
 
-type AddConditionResponse = {
+type AddConditionResponse = DefaultResponse & {
   result: ConditionTableRow;
 };
 

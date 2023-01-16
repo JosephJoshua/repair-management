@@ -1,5 +1,6 @@
 import handle from '@/core/middlewares/handle';
 import prisma from '@/core/prisma';
+import DefaultResponse from '@/core/types/DefaultResponse';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
 import AddTechnicianRequest from '@/modules/technicians/types/AddTechnicianRequest';
 import AddTechnicianResponse from '@/modules/technicians/types/AddTechnicianResponse';
@@ -78,6 +79,7 @@ export default handle({
           offset,
           limit,
         },
+        ok: true,
       });
     },
   },
@@ -96,12 +98,13 @@ export default handle({
 
       res.status(201).send({
         result: technician,
+        ok: true,
       });
     },
   },
   put: {
     schema: putSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { technicianId, name } = req.body;
 
       await prisma.technician.update({
@@ -114,19 +117,19 @@ export default handle({
         },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
   delete: {
     schema: deleteSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { technicianId } = req.query;
 
       await prisma.technician.delete({
         where: { technicianId },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
 });

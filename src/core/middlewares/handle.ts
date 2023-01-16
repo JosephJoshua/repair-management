@@ -97,6 +97,7 @@ const handle = <
       await handler({ ...req, ...parsed } as NextApiRequest, res);
     } catch (err) {
       if (err instanceof ZodError) {
+        console.log(err);
         res.status(400).send({ error: fromZodError(err) });
         return;
       }
@@ -145,6 +146,7 @@ const handleException = (
         path: url,
       },
     },
+    ok: false,
   });
 };
 

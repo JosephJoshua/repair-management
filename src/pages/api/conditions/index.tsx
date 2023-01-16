@@ -1,5 +1,6 @@
 import handle from '@/core/middlewares/handle';
 import prisma from '@/core/prisma';
+import DefaultResponse from '@/core/types/DefaultResponse';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
 import AddConditionRequest from '@/modules/conditions/types/AddConditionRequest';
 import AddConditionResponse from '@/modules/conditions/types/AddConditionResponse';
@@ -78,6 +79,7 @@ export default handle({
           offset,
           limit,
         },
+        ok: true,
       });
     },
   },
@@ -96,12 +98,13 @@ export default handle({
 
       res.status(201).send({
         result: condition,
+        ok: true,
       });
     },
   },
   put: {
     schema: putSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { conditionId, name } = req.body;
 
       await prisma.condition.update({
@@ -113,19 +116,19 @@ export default handle({
         },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
   delete: {
     schema: deleteSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { conditionId } = req.query;
 
       await prisma.condition.delete({
         where: { conditionId },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
 });

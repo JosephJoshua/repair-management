@@ -1,5 +1,6 @@
 import handle from '@/core/middlewares/handle';
 import prisma from '@/core/prisma';
+import DefaultResponse from '@/core/types/DefaultResponse';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
 import AddSupplierRequest from '@/modules/suppliers/types/AddSupplierRequest';
 import AddSupplierResponse from '@/modules/suppliers/types/AddSupplierResponse';
@@ -78,6 +79,7 @@ export default handle({
           offset,
           limit,
         },
+        ok: true,
       });
     },
   },
@@ -96,12 +98,13 @@ export default handle({
 
       res.status(201).send({
         result: supplier,
+        ok: true,
       });
     },
   },
   put: {
     schema: putSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { supplierId, name } = req.body;
 
       await prisma.supplier.update({
@@ -113,19 +116,19 @@ export default handle({
         },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
   delete: {
     schema: deleteSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { supplierId } = req.query;
 
       await prisma.supplier.delete({
         where: { supplierId },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
 });

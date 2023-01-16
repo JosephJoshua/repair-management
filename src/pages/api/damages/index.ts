@@ -1,5 +1,6 @@
 import handle from '@/core/middlewares/handle';
 import prisma from '@/core/prisma';
+import DefaultResponse from '@/core/types/DefaultResponse';
 import { SortDirectionObjectEnum } from '@/core/types/SortDirection';
 import AddDamageRequest from '@/modules/damages/types/AddDamageRequest';
 import AddDamageResponse from '@/modules/damages/types/AddDamageResponse';
@@ -75,6 +76,7 @@ export default handle({
           offset,
           limit,
         },
+        ok: true,
       });
     },
   },
@@ -93,12 +95,13 @@ export default handle({
 
       res.status(201).send({
         result: damage,
+        ok: true,
       });
     },
   },
   put: {
     schema: putSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { damageId, name } = req.body;
 
       await prisma.damage.update({
@@ -110,19 +113,19 @@ export default handle({
         },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
   delete: {
     schema: deleteSchema,
-    handler: async (req, res: NextApiResponse) => {
+    handler: async (req, res: NextApiResponse<DefaultResponse>) => {
       const { damageId } = req.query;
 
       await prisma.damage.delete({
         where: { damageId },
       });
 
-      res.status(204).end();
+      res.status(200).send({ ok: true });
     },
   },
 });

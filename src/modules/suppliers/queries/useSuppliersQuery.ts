@@ -16,11 +16,11 @@ const fetchSuppliers = async (
   return data;
 };
 
-export const useSuppliersQuery = (req: GetSuppliersRequest) => {
+export const useSuppliersQuery = (req: GetSuppliersRequest, enabled = true) => {
   return useQuery(
     [SUPPLIERS_QUERY_KEY, ...Object.values(req.query)],
     ({ signal }) => fetchSuppliers(signal, req),
-    { keepPreviousData: true, staleTime: 5 * 1_000 }
+    { keepPreviousData: true, staleTime: 5 * 1_000, enabled }
   );
 };
 
